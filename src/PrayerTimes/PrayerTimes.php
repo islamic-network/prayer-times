@@ -49,6 +49,7 @@ class PrayerTimes
     const METHOD_QATAR = 'QATAR'; // 10
     const METHOD_SINGAPORE = 'SINGAPORE'; // 11
     const METHOD_FRANCE = 'FRANCE'; // 12
+    const METHOD_CUSTOM = 'CUSTOM';
 
     /**
      * Schools that determine the Asr shadow for the purpose of this class
@@ -171,6 +172,13 @@ class PrayerTimes
         $this->loadSettings();
     }
 
+    public function setCustomMethod(Meezaan\PrayerTimes\Method $method)
+    {
+        $this->methods[$this->method] = get_object_vars($method);
+
+        $this->loadSettings();
+    }
+
     /**
      *
      */
@@ -182,6 +190,11 @@ class PrayerTimes
         $this->settings->{self::ZHUHR} = isset($this->methods[$this->method]['params'][self::ZHUHR]) ? $this->methods[$this->method]['params'][self::ZHUHR] : '0 min';
         $this->settings->{self::ISHA} = isset($this->methods[$this->method]['params'][self::ISHA]) ? $this->methods[$this->method]['params'][self::ISHA] : 0;
         $this->settings->{self::MAGHRIB} = isset($this->methods[$this->method]['params'][self::MAGHRIB]) ? $this->methods[$this->method]['params'][self::MAGHRIB] : '0 min';
+
+        // Also load any tuning / adjustments.
+        if (isset($this->methods[$this->method]['offset']) && is_array($this->methods[$this->method]['offset'])) {
+            $this->offset = $this->methods[$this->method]['offset'];
+        }
     }
 
     /**
@@ -315,7 +328,9 @@ class PrayerTimes
     {
         if (!empty($this->offset)) {
             foreach ($times as $i => $t) {
-                $times[$i] += $this->offset[$i] / 60;
+                if (isset($this->offset[$i])) {
+                    $times[$i] += $this->offset[$i] / 60;
+                }
             }
         }
 
@@ -743,7 +758,7 @@ class PrayerTimes
                     self::FAJR => 17.7,
                     self::ISHA => 14,
                     self::MAGHRIB => 4.5,
-                    self::MIDNIGHT => self::METHOD_JAFARI // isha is not explicitly specified in this method
+                    self::MIDNIGHT => self::METHOD_JAFARI
                 ]
             ],
             self::METHOD_JAFARI => [
@@ -760,33 +775,46 @@ class PrayerTimes
                 'params' => [
                     self::FAJR => 19.5,
                     self::ISHA => '90 min'
+                ],
+                'offset' => [
+                    //self::FAJR => 3,
+                    //self::SUNRISE => -2,
+                    //self::ZHUHR => -1,
+                    //self::ASR => 1,
+                    //self::MAGHRIB => 1,
+                    //self::SUNSET => 1,
+                    //self::ISHA => 1,
                 ]
-            ],self::METHOD_KUWAIT => [
+            ],
+            self::METHOD_KUWAIT => [
                 'name' => 'Kuwait',
                 'params' => [
                     self::FAJR => 18,
                     self::ISHA => 17.5
                 ]
-            ],self::METHOD_QATAR => [
+            ],
+            self::METHOD_QATAR => [
                 'name' => 'Qatar',
                 'params' => [
                     self::FAJR => 18,
                     self::ISHA => '90 min'
                 ]
-            ],self::METHOD_SINGAPORE => [
+            ],
+            self::METHOD_SINGAPORE => [
                 'name' => 'Majlis Ugama Islam Singapura, Singapore',
                 'params' => [
                     self::FAJR => 20,
                     self::ISHA => 18
                 ]
-            ],self::METHOD_FRANCE => [
+            ],
+            self::METHOD_FRANCE => [
                 'name' => 'Union Organization islamic de France calculation method',
                 'params' => [
                     self::FAJR => 12,
                     self::ISHA => 12
                 ]
             ],
-
+            self::METHOD_CUSTOM => [],
         ];
 
         $this->methodCodes = [
