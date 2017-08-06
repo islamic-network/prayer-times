@@ -2,17 +2,22 @@
 /**
  * PrayTimes.js: Prayer Times Calculator (ver 2.3)
  * Copyright (C) 2007-2011 PrayTimes.org
+ * Copyright (C) 2015-2017 AlAdhan.com
 
  * Developed in JavaScript by Hamid Zarrabi-Zadeh
  * Ported to PHP by Meezaan-ud-Din Abdu Dhil-Jalali Wal-Ikram
  * License: GNU LGPL v3.0
  */
 
+namespace Meezaan\PrayerTimes;
+
 use DateTime;
 use DateTimezone;
+use Meezaan\PrayerTimes\DMath;
 
 /**
  * Class PrayerTimes
+ * @package Model\PrayerTimes
  */
 class PrayerTimes
 {
@@ -34,11 +39,16 @@ class PrayerTimes
      */
     const METHOD_MWL = 'MWL'; // 3
     const METHOD_ISNA = 'ISNA'; // 2;
-    const METHOD_EGYPT = 'EGYPT'; // 5;    
+    const METHOD_EGYPT = 'EGYPT'; // 5;
     const METHOD_MAKKAH = 'MAKKAH'; // 4;
     const METHOD_KARACHI = 'KARACHI'; // 1;
     const METHOD_TEHRAN = 'TEHRAN'; // 7;
     const METHOD_JAFARI = 'JAFARI'; // 0;
+    const METHOD_GULF = 'GULF'; // 8
+    const METHOD_KUWAIT = 'KUWAIT'; // 9
+    const METHOD_QATAR = 'QATAR'; // 10
+    const METHOD_SINGAPORE = 'SINGAPORE'; // 11
+    const METHOD_FRANCE = 'FRANCE'; // 12
 
     /**
      * Schools that determine the Asr shadow for the purpose of this class
@@ -77,8 +87,8 @@ class PrayerTimes
      * @Array
      */
     public $methods;
-	
-	/**
+
+    /**
      * @Array
      */
     public $methodCodes;
@@ -236,9 +246,9 @@ class PrayerTimes
         $times = $this->adjustTimes($times);
 
         // add midnight time
-        $times[self::MIDNIGHT] = ($this->midnightMode == 'Jafari') ? $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET],  $times[self::FAJR]) / 2 : $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]) / 2;
-		
-		
+        $times[self::MIDNIGHT] = ($this->midnightMode == 'Jafari') ? $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) / 2 : $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]) / 2;
+
+
 
         $times = $this->tuneTimes($times);
 
@@ -303,11 +313,11 @@ class PrayerTimes
      */
     private function tuneTimes($times)
     {
-		if (!empty($this->offset)) {
-			foreach ($times as $i => $t) {
-				$times[$i] += $this->offset[$i] / 60;
-			}
-		}
+        if (!empty($this->offset)) {
+            foreach ($times as $i => $t) {
+                $times[$i] += $this->offset[$i] / 60;
+            }
+        }
 
         return $times;
     }
@@ -398,7 +408,6 @@ class PrayerTimes
         }
 
         return $time;
-
     }
 
     /**
@@ -412,10 +421,10 @@ class PrayerTimes
         $portion = 1/2; // MidNight
         if ($method == self::LATITUDE_ADJUSTMENT_METHOD_ANGLE) {
             $portion = 1/60 * $angle;
-		}
+        }
         if ($method == self::LATITUDE_ADJUSTMENT_METHOD_ONESEVENTH) {
             $portion = 1/7;
-		}
+        }
         return $portion * $night;
     }
 
@@ -440,20 +449,20 @@ class PrayerTimes
         $fajr    = $this->sunAngleTime($this->evaluate($this->settings->{self::FAJR}), $times[self::FAJR], 'ccw');
         $sunrise = $this->sunAngleTime($this->riseSetAngle(), $times[self::SUNRISE], 'ccw');
         $dhuhr   = $this->midDay($times[self::ZHUHR]);
-        $asr     = $this->asrTime($this->asrFactor(),$times[self::ASR]);
+        $asr     = $this->asrTime($this->asrFactor(), $times[self::ASR]);
         $sunset  = $this->sunAngleTime($this->riseSetAngle(), $times[self::SUNSET]);
         $maghrib = $this->sunAngleTime($this->evaluate($this->settings->{self::MAGHRIB}), $times[self::MAGHRIB]);
         $isha    = $this->sunAngleTime($this->evaluate($this->settings->{self::ISHA}), $times[self::ISHA]);
 
         return [
-            self::IMSAK => $imsak,
             self::FAJR => $fajr,
             self::SUNRISE => $sunrise,
             self::ZHUHR => $dhuhr,
             self::ASR => $asr,
             self::SUNSET => $sunset,
             self::MAGHRIB => $maghrib,
-            self::ISHA => $isha
+            self::ISHA => $isha,
+            self::IMSAK => $imsak,
         ];
     }
 
@@ -481,7 +490,7 @@ class PrayerTimes
         }
         if ($this->school == self::SCHOOL_STANDARD) {
             return 1;
-        } else if ($this->school == self::SCHOOL_HANAFI) {
+        } elseif ($this->school == self::SCHOOL_HANAFI) {
             return 2;
         } else {
             return 0;
@@ -507,7 +516,8 @@ class PrayerTimes
      * @return mixed
      */
     // compute the time at which sun reaches a specific angle below horizon
-    private function sunAngleTime($angle, $time, $direction = null) {
+    private function sunAngleTime($angle, $time, $direction = null)
+    {
         $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude/ (15* 24);
         $decl = $this->sunPosition($julianDate + $time)->declination;
         $noon = $this->midDay($time);
@@ -552,8 +562,7 @@ class PrayerTimes
      */
     private function julianDate($year, $month, $day)
     {
-        if ($month <= 2)
-        {
+        if ($month <= 2) {
             $year -= 1;
             $month += 12;
         }
@@ -671,7 +680,7 @@ class PrayerTimes
      * @param int $isha
      * @param int $midnight
      */
-    public function tune($imsak = 0, $fajr= 0, $sunrise = 0, $dhuhr = 0, $asr = 0, $maghrib = 0, $sunset = 0, $isha = 0, $midnight = 0)
+    public function tune($imsak = 0, $fajr = 0, $sunrise = 0, $dhuhr = 0, $asr = 0, $maghrib = 0, $sunset = 0, $isha = 0, $midnight = 0)
     {
         $this->offset = [
             self::IMSAK => $imsak,
@@ -745,47 +754,71 @@ class PrayerTimes
                     self::MAGHRIB => 4,
                     self::MIDNIGHT => self::METHOD_JAFARI
                 ]
-            ]
+            ],
+            self::METHOD_GULF => [
+                'name' => 'Gulf Region',
+                'params' => [
+                    self::FAJR => 19.5,
+                    self::ISHA => '90 min'
+                ]
+            ],self::METHOD_KUWAIT => [
+                'name' => 'Kuwait',
+                'params' => [
+                    self::FAJR => 18,
+                    self::ISHA => 17.5
+                ]
+            ],self::METHOD_QATAR => [
+                'name' => 'Qatar',
+                'params' => [
+                    self::FAJR => 18,
+                    self::ISHA => '90 min'
+                ]
+            ],self::METHOD_SINGAPORE => [
+                'name' => 'Majlis Ugama Islam Singapura, Singapore',
+                'params' => [
+                    self::FAJR => 20,
+                    self::ISHA => 18
+                ]
+            ],self::METHOD_FRANCE => [
+                'name' => 'Union Organization islamic de France calculation method',
+                'params' => [
+                    self::FAJR => 12,
+                    self::ISHA => 12
+                ]
+            ],
 
         ];
-		
-		$this->methodCodes = [
-			self::METHOD_MWL, self::METHOD_ISNA, self::METHOD_EGYPT, self::METHOD_MAKKAH, self::METHOD_KARACHI, self::METHOD_TEHRAN, self::METHOD_JAFARI
-		];
+
+        $this->methodCodes = [
+            self::METHOD_MWL,
+            self::METHOD_ISNA,
+            self::METHOD_EGYPT,
+            self::METHOD_MAKKAH,
+            self::METHOD_KARACHI,
+            self::METHOD_TEHRAN,
+            self::METHOD_JAFARI,
+            self::METHOD_GULF,
+            self::METHOD_KUWAIT,
+            self::METHOD_QATAR,
+            self::METHOD_SINGAPORE,
+            self::METHOD_FRANCE
+        ];
     }
 
     public function getMethod()
     {
         return $this->method;
     }
-}
 
-
-
-/**
- * Class DMath
- */
-class DMath
-{
-    public static function dtr($d) { return ($d * pi()) / 180.0; }
-    public static function rtd($r) { return ($r * 180.0) / pi(); }
-
-    public static function sin($d) { return sin(self::dtr($d)); }
-    public static function cos($d) { return cos(self::dtr($d)); }
-    public static function tan($d) { return tan(self::dtr($d)); }
-
-    public static function arcsin($d) { return self::rtd(asin($d)); }
-    public static function arccos($d) { return self::rtd(acos($d)); }
-    public static function arctan($d) { return self::rtd(atan($d)); }
-
-    public static function arccot($x) { return self::rtd(atan(1/$x)); }
-    public static function arctan2($y, $x) { return self::rtd(atan2($y, $x)); }
-
-    public static function fixAngle($a) { return self::fix($a, 360); }
-    public static function fixHour($a) { return self::fix($a, 24 ); }
-
-    public static function fix($a, $b) {
-        $a = $a - $b * (floor($a / $b));
-        return ($a < 0) ? $a + $b : $a;
+    public function getMeta()
+    {
+        return [
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'timezone' => ($this->date->getTimezone())->getName(),
+            'method' => $this->methods[$this->method],
+            'school' => $this->school
+        ];
     }
+
 }
