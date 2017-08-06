@@ -17,7 +17,7 @@ use Meezaan\PrayerTimes\DMath;
 
 /**
  * Class PrayerTimes
- * @package Model\PrayerTimes
+ * @package Meezaan\PrayerTimes
  */
 class PrayerTimes
 {

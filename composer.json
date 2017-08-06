@@ -9,8 +9,8 @@
     }
   ],
   "autoload": {
-    "psr-0": {
-      "Meezaan": "src/Meezaan/"
+    "psr-4": {
+      "Meezaan\\PrayerTimes\\": "src/PrayerTimes/"
     }
   }
 }
