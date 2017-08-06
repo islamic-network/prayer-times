@@ -2,7 +2,7 @@
 
 namespace Meezaan\PrayerTimes;
 
-use Meezaan\PrayerTimes;
+use Meezaan\PrayerTimes\PrayerTimes;
 
 class Method
 {

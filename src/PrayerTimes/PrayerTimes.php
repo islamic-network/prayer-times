@@ -49,7 +49,7 @@ class PrayerTimes
     const METHOD_QATAR = 'QATAR'; // 10
     const METHOD_SINGAPORE = 'SINGAPORE'; // 11
     const METHOD_FRANCE = 'FRANCE'; // 12
-    const METHOD_CUSTOM = 'CUSTOM';
+    const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
      * Schools that determine the Asr shadow for the purpose of this class
@@ -172,8 +172,9 @@ class PrayerTimes
         $this->loadSettings();
     }
 
-    public function setCustomMethod(Meezaan\PrayerTimes\Method $method)
+    public function setCustomMethod(Method $method)
     {
+        $this->setMethod(self::METHOD_CUSTOM);
         $this->methods[$this->method] = get_object_vars($method);
 
         $this->loadSettings();
@@ -829,7 +830,8 @@ class PrayerTimes
             self::METHOD_KUWAIT,
             self::METHOD_QATAR,
             self::METHOD_SINGAPORE,
-            self::METHOD_FRANCE
+            self::METHOD_FRANCE,
+            self::METHOD_CUSTOM,
         ];
     }
 
