@@ -20,6 +20,18 @@ class Method
             PrayerTimes::FAJR => 15,
             PrayerTimes::ISHA => 15
         ];
+
+        $this->offset = [
+            PrayerTimes::IMSAK => $imsak,
+            PrayerTimes::FAJR => $fajr,
+            PrayerTimes::SUNRISE => $sunrise,
+            PrayerTimes::ZHUHR => $dhuhr,
+            PrayerTimes::ASR => $asr,
+            PrayerTimes::MAGHRIB => $maghrib,
+            PrayerTimes::SUNSET => $sunset,
+            PrayerTimes::ISHA => $isha,
+            PrayerTimes::MIDNIGHT => $midnight
+        ];
     }
 
     public function setFajrAngle($angle)
