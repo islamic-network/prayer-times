@@ -863,6 +863,8 @@ class PrayerTimes
         if (isset($result['method']['offset'])) {
             unset($result['method']['offset']);
         }
+
+        return $result;
     }
 
 }
