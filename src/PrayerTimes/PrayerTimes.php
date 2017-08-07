@@ -192,6 +192,13 @@ class PrayerTimes
         $this->settings->{self::ISHA} = isset($this->methods[$this->method]['params'][self::ISHA]) ? $this->methods[$this->method]['params'][self::ISHA] : 0;
         $this->settings->{self::MAGHRIB} = isset($this->methods[$this->method]['params'][self::MAGHRIB]) ? $this->methods[$this->method]['params'][self::MAGHRIB] : '0 min';
 
+        // Pick up methods midnightMode
+        if (isset($this->methods[$this->method]['params'][self::MIDNIGHT]) && $this->methods[$this->method]['params'][self::MIDNIGHT] == self::MIDNIGHT_MODE_JAFARI) {
+            $this->setMidnightMode(self::MIDNIGHT_MODE_JAFARI);
+        } else {
+            $this->setMidnightMode(self::MIDNIGHT_MODE_STANDARD);
+        }
+
         // Also load any tuning / adjustments.
         if (isset($this->methods[$this->method]['offset']) && is_array($this->methods[$this->method]['offset'])) {
             $this->offset = $this->methods[$this->method]['offset'];
@@ -208,7 +215,7 @@ class PrayerTimes
      * @param string $format
      * @return mixed
      */
-    public function getTimesForToday($latitude, $longitude, $timezone, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = self::MIDNIGHT_MODE_STANDARD, $format = self::TIME_FORMAT_24H)
+    public function getTimesForToday($latitude, $longitude, $timezone, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = null, $format = self::TIME_FORMAT_24H)
     {
         $date = new DateTime(null, new DateTimezone($timezone));
 
@@ -225,14 +232,16 @@ class PrayerTimes
      * @param string $format
      * @return mixed
      */
-    public function getTimes(DateTime $date, $latitude, $longitude, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = self::MIDNIGHT_MODE_STANDARD, $format = self::TIME_FORMAT_24H)
+    public function getTimes(DateTime $date, $latitude, $longitude, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = null, $format = self::TIME_FORMAT_24H)
     {
         $this->latitude = 1 * $latitude;
         $this->longitude = 1 * $longitude;
         $this->elevation = $elevation === null ? 0 : 1 * $elevation;
         $this->setTimeFormat($format);
         $this->setLatitudeAdjustmentMethod($latitudeAdjustmentMethod);
-        $this->setMidnightMode($midnightMode);
+        if ($midnightMode !== null) {
+            $this->setMidnightMode($midnightMode);
+        }
         $this->date = $date;
 
         return $this->computeTimes();
@@ -857,6 +866,8 @@ class PrayerTimes
             'longitude' => $this->longitude,
             'timezone' => ($this->date->getTimezone())->getName(),
             'method' => $this->methods[$this->method],
+            'latitudeAdjustmentMethod' => $this->latitudeAdjustmentMethod,
+            'midnightMode' => $this->midnightMode,
             'school' => $this->school,
             'offset' => $this->offset,
         ];
