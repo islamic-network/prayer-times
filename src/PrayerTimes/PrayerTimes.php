@@ -24,15 +24,15 @@ class PrayerTimes
     /**
      * Constants for all items the times are computed for
      */
-    const IMSAK = 'imsak';
-    const FAJR = 'fajr';
-    const SUNRISE = 'sunrise';
-    const ZHUHR = 'dhuhr';
-    const ASR = 'asr';
-    const SUNSET = 'sunset';
-    const MAGHRIB = 'maghrib';
-    const ISHA = 'isha';
-    const MIDNIGHT = 'midnight';
+    const IMSAK = 'Imsak';
+    const FAJR = 'Fajr';
+    const SUNRISE = 'Sunrise';
+    const ZHUHR = 'Dhuhr';
+    const ASR = 'Asr';
+    const SUNSET = 'Sunset';
+    const MAGHRIB = 'Maghrib';
+    const ISHA = 'Isha';
+    const MIDNIGHT = 'Midnight';
 
     /**
      * All methods available for computation
@@ -266,11 +266,11 @@ class PrayerTimes
 
         $times = $this->tuneTimes($times);
 
-        // Make keys uppercase.
-        $times = array_combine(
+        // Make keys uppercase. Constants changed above, so this can be removed in due course.
+        /*$times = array_combine(
             array_map('ucfirst', array_keys($times)),
             array_values($times)
-        );
+        );*/
 
         return $this->modifyFormats($times);
     }
