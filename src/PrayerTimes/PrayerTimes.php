@@ -821,7 +821,7 @@ class PrayerTimes
             ],
             self::METHOD_FRANCE => [
                 'id' => 12,
-                'name' => 'Union Organization islamic de France',
+                'name' => 'Union Organization Islamic de France',
                 'params' => [
                     self::FAJR => 12,
                     self::ISHA => 12
