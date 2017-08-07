@@ -80,6 +80,6 @@ class Method
 
     public function tuneMidnight($mins)
     {
-            $this->offset[PrayerTimes::MIDNIGHT_MODE_JAFARI] = $mins;
+            $this->offset[PrayerTimes::MIDNIGHT] = $mins;
     }
 }

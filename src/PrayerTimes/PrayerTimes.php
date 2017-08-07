@@ -719,6 +719,7 @@ class PrayerTimes
     {
         $this->methods = [
             self::METHOD_MWL => [
+                'id' => 3,
                 'name' => 'Muslim World League',
                 'params' => [
                     self::FAJR => 18,
@@ -726,6 +727,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_ISNA => [
+                'id' => 2,
                 'name' => 'Islamic Society of North America (ISNA)',
                 'params' => [
                     self::FAJR => 15,
@@ -733,6 +735,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_EGYPT => [
+                'id' => 5,
                 'name' => 'Egyptian General Authority of Survey',
                 'params' => [
                     self::FAJR => 19.5,
@@ -740,6 +743,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_MAKKAH => [
+                'id' => 4,
                 'name' => 'Umm Al-Qura University, Makkah',
                 'params' => [
                     self::FAJR => 18.5, // fajr was 19 degrees before 1430 hijri
@@ -747,6 +751,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_KARACHI => [
+                'id' => 1,
                 'name' => 'University of Islamic Sciences, Karachi',
                 'params' => [
                     self::FAJR => 18,
@@ -754,6 +759,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_TEHRAN => [
+                'id' => 7,
                 'name' => 'Institute of Geophysics, University of Tehran',
                 'params' => [
                     self::FAJR => 17.7,
@@ -763,6 +769,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_JAFARI => [
+                'id' => 0,
                 'name' => 'Shia Ithna-Ashari, Leva Institute, Qum',
                 'params' => [
                     self::FAJR => 16,
@@ -772,22 +779,15 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_GULF => [
+                'id' => 8,
                 'name' => 'Gulf Region',
                 'params' => [
                     self::FAJR => 19.5,
                     self::ISHA => '90 min'
-                ],
-                'offset' => [
-                    //self::FAJR => 3,
-                    //self::SUNRISE => -2,
-                    //self::ZHUHR => -1,
-                    //self::ASR => 1,
-                    //self::MAGHRIB => 1,
-                    //self::SUNSET => 1,
-                    //self::ISHA => 1,
                 ]
             ],
             self::METHOD_KUWAIT => [
+                'id' => 9,
                 'name' => 'Kuwait',
                 'params' => [
                     self::FAJR => 18,
@@ -795,6 +795,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_QATAR => [
+                'id' => 10,
                 'name' => 'Qatar',
                 'params' => [
                     self::FAJR => 18,
@@ -802,6 +803,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_SINGAPORE => [
+                'id' => 11,
                 'name' => 'Majlis Ugama Islam Singapura, Singapore',
                 'params' => [
                     self::FAJR => 20,
@@ -809,13 +811,16 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_FRANCE => [
+                'id' => 12,
                 'name' => 'Union Organization islamic de France calculation method',
                 'params' => [
                     self::FAJR => 12,
                     self::ISHA => 12
                 ]
             ],
-            self::METHOD_CUSTOM => [],
+            self::METHOD_CUSTOM => [
+                'id' => 99
+            ],
         ];
 
         $this->methodCodes = [
@@ -833,6 +838,11 @@ class PrayerTimes
             self::METHOD_FRANCE,
             self::METHOD_CUSTOM,
         ];
+    }
+
+    public function getMethods()
+    {
+        return $this->methods;
     }
 
     public function getMethod()
