@@ -22,15 +22,15 @@ class Method
         ];
 
         $this->offset = [
-            PrayerTimes::IMSAK => $imsak,
-            PrayerTimes::FAJR => $fajr,
-            PrayerTimes::SUNRISE => $sunrise,
-            PrayerTimes::ZHUHR => $dhuhr,
-            PrayerTimes::ASR => $asr,
-            PrayerTimes::MAGHRIB => $maghrib,
-            PrayerTimes::SUNSET => $sunset,
-            PrayerTimes::ISHA => $isha,
-            PrayerTimes::MIDNIGHT => $midnight
+            PrayerTimes::IMSAK => 0,
+            PrayerTimes::FAJR => 0,
+            PrayerTimes::SUNRISE => 0,
+            PrayerTimes::ZHUHR => 0,
+            PrayerTimes::ASR => 0,
+            PrayerTimes::MAGHRIB => 0,
+            PrayerTimes::SUNSET => 0,
+            PrayerTimes::ISHA => 0,
+            PrayerTimes::MIDNIGHT => 0
         ];
     }
 

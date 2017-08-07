@@ -852,7 +852,7 @@ class PrayerTimes
 
     public function getMeta()
     {
-        return [
+        $result = [
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'timezone' => ($this->date->getTimezone())->getName(),
@@ -860,6 +860,9 @@ class PrayerTimes
             'school' => $this->school,
             'offset' => $this->offset,
         ];
+        if (isset($result['method']['offset'])) {
+            unset($result['method']['offset']);
+        }
     }
 
 }
