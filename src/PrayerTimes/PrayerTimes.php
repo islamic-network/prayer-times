@@ -857,7 +857,8 @@ class PrayerTimes
             'longitude' => $this->longitude,
             'timezone' => ($this->date->getTimezone())->getName(),
             'method' => $this->methods[$this->method],
-            'school' => $this->school
+            'school' => $this->school,
+            'offset' => $this->offset,
         ];
     }
 
