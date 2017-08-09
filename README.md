@@ -54,10 +54,6 @@ The following methods are currently supported:
 
 For a discussion on methods, see (URL coming soon)).
 
-## Motivation
-
-AlAdhan.com uses version one of the PrayerTimes Library from PrayTimes.org. It will now use this updated version.
-
 ## Tests
 
 Compare the results produced by this library against the original JS version.
