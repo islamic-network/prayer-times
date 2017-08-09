@@ -172,6 +172,10 @@ class PrayerTimes
         $this->loadSettings();
     }
 
+    /**
+     * [setCustomMethod description]
+     * @param Method $method [description]
+     */
     public function setCustomMethod(Method $method)
     {
         $this->setMethod(self::METHOD_CUSTOM);
@@ -181,7 +185,8 @@ class PrayerTimes
     }
 
     /**
-     *
+     * [loadSettings description]
+     * @return [type] [description]
      */
     private function loadSettings()
     {
@@ -849,16 +854,28 @@ class PrayerTimes
         ];
     }
 
+    /**
+     * [getMethods description]
+     * @return [type] [description]
+     */
     public function getMethods()
     {
         return $this->methods;
     }
 
+    /**
+     * [getMethod description]
+     * @return [type] [description]
+     */
     public function getMethod()
     {
         return $this->method;
     }
 
+    /**
+     * [getMeta description]
+     * @return [type] [description]
+     */
     public function getMeta()
     {
         $result = [
