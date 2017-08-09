@@ -199,10 +199,10 @@ class PrayerTimes
             $this->setMidnightMode(self::MIDNIGHT_MODE_STANDARD);
         }
 
-        // Also load any tuning / adjustments.
+        /* Also load any tuning / adjustments.
         if (isset($this->methods[$this->method]['offset']) && is_array($this->methods[$this->method]['offset'])) {
             $this->offset = $this->methods[$this->method]['offset'];
-        }
+        }*/
     }
 
     /**

@@ -48,7 +48,7 @@ class Method
     {
         $this->params[PrayerTimes::ISHA] = $angleOrMinsAfterMaghrib;
     }
-
+    /*
     public function tuneFajr($mins)
     {
         $this->offset[PrayerTimes::FAJR] = $mins;
@@ -94,4 +94,5 @@ class Method
     {
             $this->offset[PrayerTimes::MIDNIGHT] = $mins;
     }
+    */
 }
