@@ -1,16 +1,22 @@
 ## Prayer Times Library (PHP)
 
-This is a PHP edition of the Prayer Times Library (v2.3) originally written in JavaScript by Hamid Zarrabi-Zadeh of PrayTimes.org and available on http://praytimes.org/code/v2/js/PrayTimes.js.
+This is a PHP edition of the Prayer Times Library (v2.3) originally written in JavaScript by Hamid Zarrabi-Zadeh of PrayTimes.org and available on http://praytimes.org/code/v2/js/PrayTimes.js. It has divulged much from the original since it was first written, so please don't use it as a 'like for like' substitute - the method names, among others things, are different..
 
 ## How to Use this Library
 
-This is not a composer package, so you need to, for the time being, manually include it in your script.
+The library is a composer package, so to install it, run:
 
 ```
-<?php
-require_once('/path/to/prayerTimes.php');
+composer require meezaan/prayer-times
+```
 
-// Instantiate the class with your chosen method, Jursitic School for Asr and if you want or own Asr factor, make the jursitic school null and pass your own Asr shadow factor as the third parameter. Note that all parameters are optional.
+Using it is rather simple:
+
+```php
+<?php
+use Meezaan\PrayerTimes\PrayerTimes;
+
+// Instantiate the class with your chosen method, Juristic School for Asr and if you want or own Asr factor, make the juristic school null and pass your own Asr shadow factor as the third parameter. Note that all parameters are optional.
 
 $pt = new PrayerTimes('ISNA'); // new PrayerTimes($method, $asrJuristicMethod, $asrShadowFactor);
 
@@ -26,11 +32,27 @@ $times = $pt->getTimes(DateTime $date, $latitude, $longitude, $elevation = null,
 
 $pt->tune($imsak = 0, $fajr= 0, $sunrise = 0, $dhuhr = 0, $asr = 0, $maghrib = 0, $sunset = 0, $isha = 0, $midnight = 0);
 
+// Finally, you can also create your own methods:
+$method = new Method('My Custom Method');
+$method->setFajrAngle(18);
+$method->setMaghribAngleOrMins(19.5);
+$method->setIshaAngleOrMins('90 min');
+$method->tuneZhuhr('5 min');
+// And then:
+$pt = new PrayerTimes(PrayerTimes::METHOD_CUSTOM);
+$pt->setCustomMethod($method);
+// And then the same as before:
+$times = $pt->getTimesForToday($latitude, $longitude, $timezone, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = self::MIDNIGHT_MODE_STANDARD, $format = self::TIME_FORMAT_24H);
+
 ```
 
-## Motivation
+## Methods
 
-AlAdhan.com uses version one of the PrayerTimes Library from PrayTimes.org. It will now use this updated version.
+The following methods are currently supported:
+
+### Understanding Methods
+
+For a discussion on methods, see (URL coming soon)).
 
 ## Tests
 
