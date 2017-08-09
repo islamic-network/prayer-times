@@ -37,7 +37,6 @@ $method = new Method('My Custom Method');
 $method->setFajrAngle(18);
 $method->setMaghribAngleOrMins(19.5);
 $method->setIshaAngleOrMins('90 min');
-$method->tuneZhuhr('5 min');
 // And then:
 $pt = new PrayerTimes(PrayerTimes::METHOD_CUSTOM);
 $pt->setCustomMethod($method);
