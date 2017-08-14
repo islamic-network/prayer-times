@@ -7,26 +7,20 @@ use Meezaan\PrayerTimes\PrayerTimes;
 class Method
 {
     /**
-     * [$name description]
-     * @var [type]
+     * Name of custom method
+     * @var string
      */
     public $name;
 
     /**
-     * [$params description]
+     * Default configuration parameters
      * @var array
      */
     public $params = [];
 
     /**
-     * [$offset description]
-     * @var array
-     */
-    public $offset = [];
-
-    /**
-     * [__construct description]
-     * @param string $name [description]
+     * Constructor
+     * @param string $name
      */
     public function __construct($name = 'Custom')
     {
@@ -37,22 +31,11 @@ class Method
             PrayerTimes::ISHA => 15
         ];
 
-        $this->offset = [
-            PrayerTimes::IMSAK => 0,
-            PrayerTimes::FAJR => 0,
-            PrayerTimes::SUNRISE => 0,
-            PrayerTimes::ZHUHR => 0,
-            PrayerTimes::ASR => 0,
-            PrayerTimes::MAGHRIB => 0,
-            PrayerTimes::SUNSET => 0,
-            PrayerTimes::ISHA => 0,
-            PrayerTimes::MIDNIGHT => 0
-        ];
     }
 
     /**
-     * [setFajrAngle description]
-     * @param [type] $angle [description]
+     * Set the Fajr Angle
+     * @param decimal $angle 18 or 18.5 for degrees
      */
     public function setFajrAngle($angle)
     {
@@ -60,8 +43,8 @@ class Method
     }
 
     /**
-     * [setMaghribAngleOrMins description]
-     * @param [type] $angleOrMinsAfterSunset [description]
+     * Set Maghrib angle or minutes after sunset. Example 18 or 18.5 or '20 min'
+     * @param string $angleOrMinsAfterSunset
      */
     public function setMaghribAngleOrMins($angleOrMinsAfterSunset)
     {
@@ -69,8 +52,8 @@ class Method
     }
 
     /**
-     * [setIshaAngleOrMins description]
-     * @param [type] $angleOrMinsAfterMaghrib [description]
+     * Set Isha angle or mins after Maghrib. Example 18 or 18.5 or '90 min'
+     * @param string $angleOrMinsAfterMaghrib
      */
     public function setIshaAngleOrMins($angleOrMinsAfterMaghrib)
     {
