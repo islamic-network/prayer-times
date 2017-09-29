@@ -12,5 +12,8 @@
     "psr-4": {
       "Meezaan\\PrayerTimes\\": "src/PrayerTimes/"
     }
+  },
+  "require-dev": {
+      "phpunit/phpunit": "^6.2"
   }
 }
