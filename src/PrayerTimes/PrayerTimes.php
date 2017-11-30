@@ -807,6 +807,13 @@ class PrayerTimes
                     self::ISHA => 18
                 ]
             ],
+            self::METHOD_TURKEY => [
+                'name' => 'Diyanet İşleri Başkanlığı, Turkey',
+                'params' => [
+                    self::FAJR => 18,
+                    self::ISHA => 17
+                ]
+            ],
             self::METHOD_FRANCE => [
                 'name' => 'Union Organization islamic de France calculation method',
                 'params' => [
@@ -829,7 +836,8 @@ class PrayerTimes
             self::METHOD_KUWAIT,
             self::METHOD_QATAR,
             self::METHOD_SINGAPORE,
-            self::METHOD_FRANCE
+            self::METHOD_FRANCE,
+            self::METHOD_TURKEY
         ];
     }
 
