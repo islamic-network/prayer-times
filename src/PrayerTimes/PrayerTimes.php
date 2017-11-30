@@ -49,6 +49,7 @@ class PrayerTimes
     const METHOD_QATAR = 'QATAR'; // 10
     const METHOD_SINGAPORE = 'SINGAPORE'; // 11
     const METHOD_FRANCE = 'FRANCE'; // 12
+    const METHOD_TURKEY = 'FRANCE'; // 13
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
