@@ -49,7 +49,7 @@ class PrayerTimes
     const METHOD_QATAR = 'QATAR'; // 10
     const METHOD_SINGAPORE = 'SINGAPORE'; // 11
     const METHOD_FRANCE = 'FRANCE'; // 12
-    const METHOD_TURKEY = 'FRANCE'; // 13
+    const METHOD_TURKEY = 'TURKEY'; // 13
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
@@ -825,19 +825,20 @@ class PrayerTimes
                     self::ISHA => 18
                 ]
             ],
-            self::METHOD_TURKEY => [
-                'name' => 'Diyanet İşleri Başkanlığı, Turkey',
-                'params' => [
-                    self::FAJR => 18,
-                    self::ISHA => 17
-                ]
-            ],
             self::METHOD_FRANCE => [
                 'id' => 12,
                 'name' => 'Union Organization Islamic de France',
                 'params' => [
                     self::FAJR => 12,
                     self::ISHA => 12
+                ]
+            ],
+            self::METHOD_TURKEY => [
+                'id' => 13,
+                'name' => 'Diyanet İşleri Başkanlığı, Turkey',
+                'params' => [
+                    self::FAJR => 18,
+                    self::ISHA => 17
                 ]
             ],
             self::METHOD_CUSTOM => [
