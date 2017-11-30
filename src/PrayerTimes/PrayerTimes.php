@@ -24,15 +24,15 @@ class PrayerTimes
     /**
      * Constants for all items the times are computed for
      */
-    const IMSAK = 'imsak';
-    const FAJR = 'fajr';
-    const SUNRISE = 'sunrise';
-    const ZHUHR = 'dhuhr';
-    const ASR = 'asr';
-    const SUNSET = 'sunset';
-    const MAGHRIB = 'maghrib';
-    const ISHA = 'isha';
-    const MIDNIGHT = 'midnight';
+    const IMSAK = 'Imsak';
+    const FAJR = 'Fajr';
+    const SUNRISE = 'Sunrise';
+    const ZHUHR = 'Dhuhr';
+    const ASR = 'Asr';
+    const SUNSET = 'Sunset';
+    const MAGHRIB = 'Maghrib';
+    const ISHA = 'Isha';
+    const MIDNIGHT = 'Midnight';
 
     /**
      * All methods available for computation
@@ -49,7 +49,7 @@ class PrayerTimes
     const METHOD_QATAR = 'QATAR'; // 10
     const METHOD_SINGAPORE = 'SINGAPORE'; // 11
     const METHOD_FRANCE = 'FRANCE'; // 12
-    const METHOD_CUSTOM = 'CUSTOM';
+    const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
      * Schools that determine the Asr shadow for the purpose of this class
@@ -172,15 +172,21 @@ class PrayerTimes
         $this->loadSettings();
     }
 
-    public function setCustomMethod(Meezaan\PrayerTimes\Method $method)
+    /**
+     * [setCustomMethod description]
+     * @param Method $method [description]
+     */
+    public function setCustomMethod(Method $method)
     {
+        $this->setMethod(self::METHOD_CUSTOM);
         $this->methods[$this->method] = get_object_vars($method);
 
         $this->loadSettings();
     }
 
     /**
-     *
+     * [loadSettings description]
+     * @return [type] [description]
      */
     private function loadSettings()
     {
@@ -191,10 +197,17 @@ class PrayerTimes
         $this->settings->{self::ISHA} = isset($this->methods[$this->method]['params'][self::ISHA]) ? $this->methods[$this->method]['params'][self::ISHA] : 0;
         $this->settings->{self::MAGHRIB} = isset($this->methods[$this->method]['params'][self::MAGHRIB]) ? $this->methods[$this->method]['params'][self::MAGHRIB] : '0 min';
 
-        // Also load any tuning / adjustments.
+        // Pick up methods midnightMode
+        if (isset($this->methods[$this->method]['params'][self::MIDNIGHT]) && $this->methods[$this->method]['params'][self::MIDNIGHT] == self::MIDNIGHT_MODE_JAFARI) {
+            $this->setMidnightMode(self::MIDNIGHT_MODE_JAFARI);
+        } else {
+            $this->setMidnightMode(self::MIDNIGHT_MODE_STANDARD);
+        }
+
+        /* Also load any tuning / adjustments.
         if (isset($this->methods[$this->method]['offset']) && is_array($this->methods[$this->method]['offset'])) {
             $this->offset = $this->methods[$this->method]['offset'];
-        }
+        }*/
     }
 
     /**
@@ -207,7 +220,7 @@ class PrayerTimes
      * @param string $format
      * @return mixed
      */
-    public function getTimesForToday($latitude, $longitude, $timezone, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = self::MIDNIGHT_MODE_STANDARD, $format = self::TIME_FORMAT_24H)
+    public function getTimesForToday($latitude, $longitude, $timezone, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = null, $format = self::TIME_FORMAT_24H)
     {
         $date = new DateTime(null, new DateTimezone($timezone));
 
@@ -224,14 +237,16 @@ class PrayerTimes
      * @param string $format
      * @return mixed
      */
-    public function getTimes(DateTime $date, $latitude, $longitude, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = self::MIDNIGHT_MODE_STANDARD, $format = self::TIME_FORMAT_24H)
+    public function getTimes(DateTime $date, $latitude, $longitude, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = null, $format = self::TIME_FORMAT_24H)
     {
         $this->latitude = 1 * $latitude;
         $this->longitude = 1 * $longitude;
         $this->elevation = $elevation === null ? 0 : 1 * $elevation;
         $this->setTimeFormat($format);
         $this->setLatitudeAdjustmentMethod($latitudeAdjustmentMethod);
-        $this->setMidnightMode($midnightMode);
+        if ($midnightMode !== null) {
+            $this->setMidnightMode($midnightMode);
+        }
         $this->date = $date;
 
         return $this->computeTimes();
@@ -265,11 +280,11 @@ class PrayerTimes
 
         $times = $this->tuneTimes($times);
 
-        // Make keys uppercase.
-        $times = array_combine(
+        // Make keys uppercase. Constants changed above, so this can be removed in due course.
+        /*$times = array_combine(
             array_map('ucfirst', array_keys($times)),
             array_values($times)
-        );
+        );*/
 
         return $this->modifyFormats($times);
     }
@@ -718,6 +733,7 @@ class PrayerTimes
     {
         $this->methods = [
             self::METHOD_MWL => [
+                'id' => 3,
                 'name' => 'Muslim World League',
                 'params' => [
                     self::FAJR => 18,
@@ -725,6 +741,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_ISNA => [
+                'id' => 2,
                 'name' => 'Islamic Society of North America (ISNA)',
                 'params' => [
                     self::FAJR => 15,
@@ -732,6 +749,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_EGYPT => [
+                'id' => 5,
                 'name' => 'Egyptian General Authority of Survey',
                 'params' => [
                     self::FAJR => 19.5,
@@ -739,6 +757,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_MAKKAH => [
+                'id' => 4,
                 'name' => 'Umm Al-Qura University, Makkah',
                 'params' => [
                     self::FAJR => 18.5, // fajr was 19 degrees before 1430 hijri
@@ -746,6 +765,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_KARACHI => [
+                'id' => 1,
                 'name' => 'University of Islamic Sciences, Karachi',
                 'params' => [
                     self::FAJR => 18,
@@ -753,6 +773,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_TEHRAN => [
+                'id' => 7,
                 'name' => 'Institute of Geophysics, University of Tehran',
                 'params' => [
                     self::FAJR => 17.7,
@@ -762,6 +783,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_JAFARI => [
+                'id' => 0,
                 'name' => 'Shia Ithna-Ashari, Leva Institute, Qum',
                 'params' => [
                     self::FAJR => 16,
@@ -771,22 +793,15 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_GULF => [
+                'id' => 8,
                 'name' => 'Gulf Region',
                 'params' => [
                     self::FAJR => 19.5,
                     self::ISHA => '90 min'
-                ],
-                'offset' => [
-                    //self::FAJR => 3,
-                    //self::SUNRISE => -2,
-                    //self::ZHUHR => -1,
-                    //self::ASR => 1,
-                    //self::MAGHRIB => 1,
-                    //self::SUNSET => 1,
-                    //self::ISHA => 1,
                 ]
             ],
             self::METHOD_KUWAIT => [
+                'id' => 9,
                 'name' => 'Kuwait',
                 'params' => [
                     self::FAJR => 18,
@@ -794,6 +809,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_QATAR => [
+                'id' => 10,
                 'name' => 'Qatar',
                 'params' => [
                     self::FAJR => 18,
@@ -801,6 +817,7 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_SINGAPORE => [
+                'id' => 11,
                 'name' => 'Majlis Ugama Islam Singapura, Singapore',
                 'params' => [
                     self::FAJR => 20,
@@ -815,13 +832,16 @@ class PrayerTimes
                 ]
             ],
             self::METHOD_FRANCE => [
-                'name' => 'Union Organization islamic de France calculation method',
+                'id' => 12,
+                'name' => 'Union Organization Islamic de France',
                 'params' => [
                     self::FAJR => 12,
                     self::ISHA => 12
                 ]
             ],
-            self::METHOD_CUSTOM => [],
+            self::METHOD_CUSTOM => [
+                'id' => 99
+            ],
         ];
 
         $this->methodCodes = [
@@ -837,24 +857,50 @@ class PrayerTimes
             self::METHOD_QATAR,
             self::METHOD_SINGAPORE,
             self::METHOD_FRANCE,
-            self::METHOD_TURKEY
+            self::METHOD_TURKEY,
+            self::METHOD_CUSTOM,
         ];
     }
 
+    /**
+     * [getMethods description]
+     * @return [type] [description]
+     */
+    public function getMethods()
+    {
+        return $this->methods;
+    }
+
+    /**
+     * [getMethod description]
+     * @return [type] [description]
+     */
     public function getMethod()
     {
         return $this->method;
     }
 
+    /**
+     * [getMeta description]
+     * @return [type] [description]
+     */
     public function getMeta()
     {
-        return [
+        $result = [
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'timezone' => ($this->date->getTimezone())->getName(),
             'method' => $this->methods[$this->method],
-            'school' => $this->school
+            'latitudeAdjustmentMethod' => $this->latitudeAdjustmentMethod,
+            'midnightMode' => $this->midnightMode,
+            'school' => $this->school,
+            'offset' => $this->offset,
         ];
+        if (isset($result['method']['offset'])) {
+            unset($result['method']['offset']);
+        }
+
+        return $result;
     }
 
 }
