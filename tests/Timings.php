@@ -20,6 +20,13 @@ class TimingsTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('22:02', $t['Isha']);
         $this->assertEquals('03:47', $t['Imsak']);
         $this->assertEquals('00:59', $t['Midnight']);
+
+        $pt = new PrayerTimes('KARACHI');
+        $date = new DateTime('2018-01-19', new DateTimezone('Asia/Yekaterinburg'));
+        $t = $pt->getTimes($date, '67.104732', '67.104732');
+        foreach($t as $ts) {
+            $this->assertNotEquals('-----', $ts);
+        }
     }
 
 }

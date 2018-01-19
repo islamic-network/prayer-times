@@ -278,14 +278,7 @@ class PrayerTimes
         $times[self::MIDNIGHT] = ($this->midnightMode == 'Jafari') ? $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) / 2 : $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]) / 2;
 
 
-
         $times = $this->tuneTimes($times);
-
-        // Make keys uppercase. Constants changed above, so this can be removed in due course.
-        /*$times = array_combine(
-            array_map('ucfirst', array_keys($times)),
-            array_values($times)
-        );*/
 
         return $this->modifyFormats($times);
     }
@@ -505,15 +498,53 @@ class PrayerTimes
     private function asrTime($factor, $time)
     {
         $julianDate = GregorianToJD($this->date->format('n'), $this->date->format('d'), $this->date->format('Y'));
+
         $decl = $this->sunPosition($julianDate + $time)->declination;
+
         $angle = -DMath::arccot($factor+ DMath::tan(abs($this->latitude- $decl)));
 
         return $this->sunAngleTime($angle, $time);
     }
 
     /**
+     * @param $angle
+     * @param $time
+     * @param null $direction
+     * @return mixed
+     */
+    // compute the time at which sun reaches a specific angle below horizon
+    /*private function sunAngleTime($angle, $time, $direction = null)
+    {
+        $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude/ (15* 24);
+        $decl = $this->sunPosition($julianDate + $time)->declination;
+        $noon = $this->midDay($time);
+        $t = 1/15 * DMath::arccos((-DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude)) / (DMath::cos($decl) * DMath::cos($this->latitude)));
+
+        return $noon + ($direction == 'ccw' ? -$t : $t);
+    }*/
+
+    /**
      * @return int|null
      */
+    private function sunAngleTime($angle, $time, $direction = null)
+    {
+        $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude/ (15* 24);
+        $decl = $this->sunPosition($julianDate + $time)->declination;
+        $noon = $this->midDay($time);
+        //$t = 1/15 * DMath::arccos((-DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude)) / (DMath::cos($decl) * DMath::cos($this->latitude)));
+        $p1 = -DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude);
+        $p2 = DMath::cos($decl) * DMath::cos($this->latitude);
+        $cosRange = ($p1/$p2);
+        if ($cosRange > 1) {
+            $cosRange = 1;
+        }
+        if ($cosRange < -11) {
+            $cosRange = -1;
+        }
+        $t = 1/15 * DMath::arccos($cosRange);
+
+        return $noon + ($direction == 'ccw' ? -$t : $t);
+    }
     private function asrFactor()
     {
         if ($this->asrShadowFactor !== null) {
@@ -540,23 +571,6 @@ class PrayerTimes
         return 0.833+ $angle;
     }
 
-    /**
-     * @param $angle
-     * @param $time
-     * @param null $direction
-     * @return mixed
-     */
-    // compute the time at which sun reaches a specific angle below horizon
-    private function sunAngleTime($angle, $time, $direction = null)
-    {
-        $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude/ (15* 24);
-        $decl = $this->sunPosition($julianDate + $time)->declination;
-        $noon = $this->midDay($time);
-        $t = 1/15 * DMath::arccos((-DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude)) /
-                (DMath::cos($decl) * DMath::cos($this->latitude)));
-
-        return $noon + ($direction == 'ccw' ? -$t : $t);
-    }
 
     /**
      * @param $julianDate
