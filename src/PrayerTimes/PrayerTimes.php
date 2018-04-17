@@ -275,7 +275,7 @@ class PrayerTimes
         $times = $this->adjustTimes($times);
 
         // add midnight time
-        $times[self::MIDNIGHT] = ($this->midnightMode == 'Jafari') ? $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) / 2 : $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]) / 2;
+        $times[self::MIDNIGHT] = ($this->midnightMode == MIDNIGHT_MODE_JAFARI) ? $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) / 2 : $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]) / 2;
 
 
         $times = $this->tuneTimes($times);
