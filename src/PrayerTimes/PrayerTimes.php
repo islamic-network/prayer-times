@@ -538,7 +538,7 @@ class PrayerTimes
         if ($cosRange > 1) {
             $cosRange = 1;
         }
-        if ($cosRange < -11) {
+        if ($cosRange < -1) {
             $cosRange = -1;
         }
         $t = 1/15 * DMath::arccos($cosRange);
