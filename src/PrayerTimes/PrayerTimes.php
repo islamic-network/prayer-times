@@ -50,6 +50,7 @@ class PrayerTimes
     const METHOD_SINGAPORE = 'SINGAPORE'; // 11
     const METHOD_FRANCE = 'FRANCE'; // 12
     const METHOD_TURKEY = 'TURKEY'; // 13
+    const METHOD_RUSSIA = 'RUSSIA'; // 13
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
@@ -855,6 +856,14 @@ class PrayerTimes
                     self::ISHA => 17
                 ]
             ],
+            self::METHOD_RUSSIA => [
+                'id' => 14,
+                'name' => 'Spiritual Administration of Muslims of Russia',
+                'params' => [
+                    self::FAJR => 16,
+                    self::ISHA => 15
+                ]
+            ],
             self::METHOD_CUSTOM => [
                 'id' => 99
             ],
@@ -874,6 +883,7 @@ class PrayerTimes
             self::METHOD_SINGAPORE,
             self::METHOD_FRANCE,
             self::METHOD_TURKEY,
+            self::METHOD_RUSSIA,
             self::METHOD_CUSTOM,
         ];
     }
