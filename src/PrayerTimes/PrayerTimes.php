@@ -50,7 +50,7 @@ class PrayerTimes
     const METHOD_SINGAPORE = 'SINGAPORE'; // 11
     const METHOD_FRANCE = 'FRANCE'; // 12
     const METHOD_TURKEY = 'TURKEY'; // 13
-    const METHOD_RUSSIA = 'RUSSIA'; // 13
+    const METHOD_RUSSIA = 'RUSSIA'; // 14
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
