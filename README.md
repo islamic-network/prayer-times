@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/meezaan/prayer-times.svg?style=svg)](https://circleci.com/gh/meezaan/prayer-times)
+[![CircleCI](https://circleci.com/gh/islamic-network/prayer-times.svg?style=shield)](https://circleci.com/gh/islamic-network/prayer-times)
 
 ## Prayer Times Library (PHP)
 

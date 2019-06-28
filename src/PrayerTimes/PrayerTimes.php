@@ -14,6 +14,7 @@ namespace IslamicNetwork\PrayerTimes;
 use DateTime;
 use DateTimezone;
 use IslamicNetwork\PrayerTimes\DMath;
+use IslamicNetwork\PrayerTimes\Method;
 
 /**
  * Class PrayerTimes
@@ -33,25 +34,6 @@ class PrayerTimes
     const MAGHRIB = 'Maghrib';
     const ISHA = 'Isha';
     const MIDNIGHT = 'Midnight';
-
-    /**
-     * All methods available for computation
-     */
-    const METHOD_MWL = 'MWL'; // 3
-    const METHOD_ISNA = 'ISNA'; // 2;
-    const METHOD_EGYPT = 'EGYPT'; // 5;
-    const METHOD_MAKKAH = 'MAKKAH'; // 4;
-    const METHOD_KARACHI = 'KARACHI'; // 1;
-    const METHOD_TEHRAN = 'TEHRAN'; // 7;
-    const METHOD_JAFARI = 'JAFARI'; // 0;
-    const METHOD_GULF = 'GULF'; // 8
-    const METHOD_KUWAIT = 'KUWAIT'; // 9
-    const METHOD_QATAR = 'QATAR'; // 10
-    const METHOD_SINGAPORE = 'SINGAPORE'; // 11
-    const METHOD_FRANCE = 'FRANCE'; // 12
-    const METHOD_TURKEY = 'TURKEY'; // 13
-    const METHOD_RUSSIA = 'RUSSIA'; // 14
-    const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
      * Schools that determine the Asr shadow for the purpose of this class
@@ -163,7 +145,7 @@ class PrayerTimes
      * @param null $asrShadowFactor If specified, this will override the school setting
      * @param array|null $offset
      */
-    public function __construct($method = self::METHOD_MWL, $school = self::SCHOOL_STANDARD, $asrShadowFactor = null)
+    public function __construct($method = Method::METHOD_MWL, $school = self::SCHOOL_STANDARD, $asrShadowFactor = null)
     {
         $this->loadMethods();
         $this->setMethod($method);
@@ -180,7 +162,7 @@ class PrayerTimes
      */
     public function setCustomMethod(Method $method)
     {
-        $this->setMethod(self::METHOD_CUSTOM);
+        $this->setMethod(Method::METHOD_CUSTOM);
         $this->methods[$this->method] = get_object_vars($method);
 
         $this->loadSettings();
@@ -218,9 +200,10 @@ class PrayerTimes
      * @param $timezone
      * @param null $elevation
      * @param string $latitudeAdjustmentMethod
-     * @param string $midnightMode
+     * @param null $midnightMode
      * @param string $format
      * @return mixed
+     * @throws \Exception
      */
     public function getTimesForToday($latitude, $longitude, $timezone, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = null, $format = self::TIME_FORMAT_24H)
     {
@@ -650,12 +633,12 @@ class PrayerTimes
     /**
      * @param string $method
      */
-    public function setMethod($method = self::METHOD_MWL)
+    public function setMethod($method = Method::METHOD_MWL)
     {
         if (in_array($method, $this->methodCodes)) {
             $this->method = $method;
         } else {
-            $this->method = self::METHOD_MWL; // Default to MWL
+            $this->method = Method::METHOD_MWL; // Default to MWL
         }
     }
 
@@ -747,145 +730,9 @@ class PrayerTimes
      */
     public function loadMethods()
     {
-        $this->methods = [
-            self::METHOD_MWL => [
-                'id' => 3,
-                'name' => 'Muslim World League',
-                'params' => [
-                    self::FAJR => 18,
-                    self::ISHA => 17
-                ]
-            ],
-            self::METHOD_ISNA => [
-                'id' => 2,
-                'name' => 'Islamic Society of North America (ISNA)',
-                'params' => [
-                    self::FAJR => 15,
-                    self::ISHA => 15
-                ]
-            ],
-            self::METHOD_EGYPT => [
-                'id' => 5,
-                'name' => 'Egyptian General Authority of Survey',
-                'params' => [
-                    self::FAJR => 19.5,
-                    self::ISHA => 17.5
-                ]
-            ],
-            self::METHOD_MAKKAH => [
-                'id' => 4,
-                'name' => 'Umm Al-Qura University, Makkah',
-                'params' => [
-                    self::FAJR => 18.5, // fajr was 19 degrees before 1430 hijri
-                    self::ISHA => '90 min'
-                ]
-            ],
-            self::METHOD_KARACHI => [
-                'id' => 1,
-                'name' => 'University of Islamic Sciences, Karachi',
-                'params' => [
-                    self::FAJR => 18,
-                    self::ISHA => 18
-                ]
-            ],
-            self::METHOD_TEHRAN => [
-                'id' => 7,
-                'name' => 'Institute of Geophysics, University of Tehran',
-                'params' => [
-                    self::FAJR => 17.7,
-                    self::ISHA => 14,
-                    self::MAGHRIB => 4.5,
-                    self::MIDNIGHT => self::METHOD_JAFARI
-                ]
-            ],
-            self::METHOD_JAFARI => [
-                'id' => 0,
-                'name' => 'Shia Ithna-Ashari, Leva Institute, Qum',
-                'params' => [
-                    self::FAJR => 16,
-                    self::ISHA => 14,
-                    self::MAGHRIB => 4,
-                    self::MIDNIGHT => self::METHOD_JAFARI
-                ]
-            ],
-            self::METHOD_GULF => [
-                'id' => 8,
-                'name' => 'Gulf Region',
-                'params' => [
-                    self::FAJR => 19.5,
-                    self::ISHA => '90 min'
-                ]
-            ],
-            self::METHOD_KUWAIT => [
-                'id' => 9,
-                'name' => 'Kuwait',
-                'params' => [
-                    self::FAJR => 18,
-                    self::ISHA => 17.5
-                ]
-            ],
-            self::METHOD_QATAR => [
-                'id' => 10,
-                'name' => 'Qatar',
-                'params' => [
-                    self::FAJR => 18,
-                    self::ISHA => '90 min'
-                ]
-            ],
-            self::METHOD_SINGAPORE => [
-                'id' => 11,
-                'name' => 'Majlis Ugama Islam Singapura, Singapore',
-                'params' => [
-                    self::FAJR => 20,
-                    self::ISHA => 18
-                ]
-            ],
-            self::METHOD_FRANCE => [
-                'id' => 12,
-                'name' => 'Union Organization Islamic de France',
-                'params' => [
-                    self::FAJR => 12,
-                    self::ISHA => 12
-                ]
-            ],
-            self::METHOD_TURKEY => [
-                'id' => 13,
-                'name' => 'Diyanet İşleri Başkanlığı, Turkey',
-                'params' => [
-                    self::FAJR => 18,
-                    self::ISHA => 17
-                ]
-            ],
-            self::METHOD_RUSSIA => [
-                'id' => 14,
-                'name' => 'Spiritual Administration of Muslims of Russia',
-                'params' => [
-                    self::FAJR => 16,
-                    self::ISHA => 15
-                ]
-            ],
-            self::METHOD_CUSTOM => [
-                'id' => 99
-            ],
-        ];
+        $this->methods = Method::getMethods();
 
-        $this->methodCodes = [
-            self::METHOD_MWL,
-            self::METHOD_ISNA,
-            self::METHOD_EGYPT,
-            self::METHOD_MAKKAH,
-            self::METHOD_KARACHI,
-            self::METHOD_TEHRAN,
-            self::METHOD_JAFARI,
-            self::METHOD_GULF,
-            self::METHOD_KUWAIT,
-            self::METHOD_QATAR,
-            self::METHOD_SINGAPORE,
-            self::METHOD_FRANCE,
-            self::METHOD_TURKEY,
-            self::METHOD_RUSSIA,
-            self::METHOD_CUSTOM,
-        ];
+        $this->methodCodes = Method::getMethodCodes();
     }
 
     /**
