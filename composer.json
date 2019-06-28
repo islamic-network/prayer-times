@@ -1,16 +1,10 @@
 {
-  "name": "meezaan/prayer-times",
+  "name": "islamic-network/prayer-times",
   "type": "library",
   "description": "Precision and Powerful PHP Prayer Times Library",
-  "authors": [
-    {
-      "name": "Meezaan-ud-Din Abdu Dhil-Jalali Wal-Ikram",
-      "email": "website@meezaan.net"
-    }
-  ],
   "autoload": {
     "psr-4": {
-      "Meezaan\\PrayerTimes\\": "src/PrayerTimes/"
+      "IslamicNetwork\\PrayerTimes\\": "src/PrayerTimes/"
     }
   },
   "require-dev": {
