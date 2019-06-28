@@ -49,11 +49,11 @@ $times = $pt->getTimesForToday($latitude, $longitude, $timezone, $elevation = nu
 
 ## Methods
 
-The following methods are currently supported:
+Supported methods can be seen @ https://github.com/islamic-network/prayer-times/blob/master/src/PrayerTimes/Method.php#L10.
 
 ### Understanding Methods
 
-For a discussion on methods, see (URL coming soon)).
+For a discussion on methods, see https://aladhan.com/calculation-methods.
 
 ## Tests
 
