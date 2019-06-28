@@ -9,7 +9,7 @@ This is a PHP edition of the Prayer Times Library (v2.3) originally written in J
 The library is a composer package, so to install it, run:
 
 ```
-composer require meezaan/prayer-times
+composer require islamic-network/prayer-times
 ```
 
 Using it is rather simple:
