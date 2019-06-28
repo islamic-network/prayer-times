@@ -2,7 +2,7 @@
 $x = (realpath(__DIR__ . '/../vendor/autoload.php'));
 require_once($x);
 
-use  Meezaan\PrayerTimes\PrayerTimes;
+use  IslamicNetwork\PrayerTimes\PrayerTimes;
 
 class TimingsTest extends PHPUnit\Framework\TestCase
 {

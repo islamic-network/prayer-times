@@ -16,7 +16,7 @@ Using it is rather simple:
 
 ```php
 <?php
-use Meezaan\PrayerTimes\PrayerTimes;
+use IslamicNetwork\PrayerTimes\PrayerTimes;
 
 // Instantiate the class with your chosen method, Juristic School for Asr and if you want or own Asr factor, make the juristic school null and pass your own Asr shadow factor as the third parameter. Note that all parameters are optional.
 

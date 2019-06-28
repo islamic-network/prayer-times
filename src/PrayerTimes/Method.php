@@ -1,8 +1,8 @@
 <?php
 
-namespace Meezaan\PrayerTimes;
+namespace IslamicNetwork\PrayerTimes;
 
-use Meezaan\PrayerTimes\PrayerTimes;
+use IslamicNetwork\PrayerTimes\PrayerTimes;
 
 class Method
 {

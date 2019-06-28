@@ -9,15 +9,15 @@
  * License: GNU LGPL v3.0
  */
 
-namespace Meezaan\PrayerTimes;
+namespace IslamicNetwork\PrayerTimes;
 
 use DateTime;
 use DateTimezone;
-use Meezaan\PrayerTimes\DMath;
+use IslamicNetwork\PrayerTimes\DMath;
 
 /**
  * Class PrayerTimes
- * @package Meezaan\PrayerTimes
+ * @package IslamicNetwork\PrayerTimes
  */
 class PrayerTimes
 {

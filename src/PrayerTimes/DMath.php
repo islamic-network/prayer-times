@@ -1,5 +1,5 @@
 <?php
-namespace Meezaan\PrayerTimes;
+namespace IslamicNetwork\PrayerTimes;
 /**
  * Class DMath
  */
