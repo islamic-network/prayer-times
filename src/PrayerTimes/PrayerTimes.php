@@ -304,10 +304,9 @@ class PrayerTimes
         $hour = ($format == self::TIME_FORMAT_24H) ? $this->twoDigitsFormat($hours) : (($hours+ 12 -1)% 12+ 1);
         $twoDigitMinutes = $this->twoDigitsFormat($minutes);
 
-        // Create temporary date object
-        $date = clone $this->date;
-
         if ($format == self::TIME_FORMAT_ISO8601) {
+            // Create temporary date object
+            $date = clone $this->date;
             $date->setTime($hours, $twoDigitMinutes);
             return $date->format(DateTime::ATOM);
         }
