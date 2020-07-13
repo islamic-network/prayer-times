@@ -308,7 +308,7 @@ class PrayerTimes
         $date = clone $this->date;
 
         if ($format == self::TIME_FORMAT_ISO8601) {
-            $date->add(new \DateInterval('PT' . $hours . 'H' . $twoDigitMinutes . 'M'));
+            $date->setTime($hours, $twoDigitMinutes);
             return $date->format(DateTime::ATOM);
         }
 
