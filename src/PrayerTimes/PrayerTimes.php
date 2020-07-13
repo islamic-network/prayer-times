@@ -62,6 +62,7 @@ class PrayerTimes
     const TIME_FORMAT_12H = '12h'; // 12-hour format
     const TIME_FORMAT_12hNS = '12hNS'; // 12-hour format with no suffix
     const TIME_FORMAT_FLOAT = 'Float'; // floating point number
+    const TIME_FORMAT_ISO8601 = 'iso8601';
 
     /**
      * If we're unable to calculate a time, we'll return this
@@ -296,12 +297,22 @@ class PrayerTimes
         $suffixes = ['am', 'pm'];
 
         $time = DMath::fixHour($time + 0.5/ 60);  // add 0.5 minutes to round
+
         $hours = floor($time);
         $minutes = floor(($time - $hours)* 60);
         $suffix = ($this->timeFormat == self::TIME_FORMAT_12H) ? $suffixes[$hours < 12 ? 0 : 1] : '';
         $hour = ($format == self::TIME_FORMAT_24H) ? $this->twoDigitsFormat($hours) : (($hours+ 12 -1)% 12+ 1);
+        $twoDigitMinutes = $this->twoDigitsFormat($minutes);
 
-        return $hour . ':' . $this->twoDigitsFormat($minutes) . ($suffix ? ' ' . $suffix : '');
+        // Create temporary date object
+        $date = clone $this->date;
+
+        if ($format == self::TIME_FORMAT_ISO8601) {
+            $date->add(new \DateInterval('PT' . $hours . 'H' . $twoDigitMinutes . 'M'));
+            return $date->format(DateTime::ATOM);
+        }
+
+        return $hour . ':' . $twoDigitMinutes . ($suffix ? ' ' . $suffix : '');
     }
 
     /**
@@ -691,7 +702,7 @@ class PrayerTimes
      */
     public function setTimeFormat($format = self::TIME_FORMAT_24H)
     {
-        if (in_array($format, [self::TIME_FORMAT_24H, self::TIME_FORMAT_FLOAT, self::TIME_FORMAT_12hNS, self::TIME_FORMAT_12H])) {
+        if (in_array($format, [self::TIME_FORMAT_ISO8601, self::TIME_FORMAT_24H, self::TIME_FORMAT_FLOAT, self::TIME_FORMAT_12hNS, self::TIME_FORMAT_12H])) {
             $this->timeFormat = $format;
         } else {
             $this->timeFormat = self::TIME_FORMAT_24H;

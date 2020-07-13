@@ -6,7 +6,18 @@ use  IslamicNetwork\PrayerTimes\PrayerTimes;
 
 class TimingsTest extends PHPUnit\Framework\TestCase
 {
-    public function testHtoG()
+    public function testIso8601Format()
+    {
+        $pt = new PrayerTimes('ISNA');
+        $date = new DateTime('2014-4-24', new DateTimezone('Europe/London'));
+        $t = $pt->getTimes($date, '51.508515', '-0.1254872', null, PrayerTimes::LATITUDE_ADJUSTMENT_METHOD_ANGLE, null, PrayerTimes::TIME_FORMAT_ISO8601);
+        $this->assertEquals('2014-04-24T03:57:00+01:00', $t['Fajr']);
+        $this->assertEquals('2014-04-24T05:46:00+01:00', $t['Sunrise']);
+        $this->assertEquals('2014-04-24T12:59:00+01:00', $t['Dhuhr']);
+        $this->assertEquals('2014-04-24T16:55:00+01:00', $t['Asr']);
+    }
+
+    public function testTimes()
     {
         $pt = new PrayerTimes('ISNA');
         $date = new DateTime('2014-4-24', new DateTimezone('Europe/London'));
