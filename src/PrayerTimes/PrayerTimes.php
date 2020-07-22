@@ -15,8 +15,6 @@ use DateTime;
 use DateTimezone;
 use IslamicNetwork\MoonSighting\Fajr;
 use IslamicNetwork\MoonSighting\Isha;
-use IslamicNetwork\PrayerTimes\DMath;
-use IslamicNetwork\PrayerTimes\Method;
 
 /**
  * Class PrayerTimes
@@ -139,7 +137,7 @@ class PrayerTimes
     /**
      * @String
      */
-    private $shafaq; // Only valid for METHOD_MOONSIGHTING
+    private $shafaq = Isha::SHAFAQ_GENERAL; // Only valid for METHOD_MOONSIGHTING
 
     /**
      * @String
@@ -165,7 +163,7 @@ class PrayerTimes
     }
 
 
-    public function setShafaq($shafaq = Isha::SHAFAQ_GENERAL)
+    public function setShafaq(string $shafaq)
     {
         $this->shafaq = $shafaq;
     }
