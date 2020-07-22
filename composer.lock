@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "islamic-network/prayer-times-moonsighting",
-            "version": "1.0",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/islamic-network/prayer-times-moonsighting.git",
-                "reference": "1bd37962c663fce2d0fc57b248ed95a0fd016788"
+                "reference": "73f2b0ee9d41fa145f262d372a06cb9a9dae353e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/islamic-network/prayer-times-moonsighting/zipball/1bd37962c663fce2d0fc57b248ed95a0fd016788",
-                "reference": "1bd37962c663fce2d0fc57b248ed95a0fd016788",
+                "url": "https://api.github.com/repos/islamic-network/prayer-times-moonsighting/zipball/73f2b0ee9d41fa145f262d372a06cb9a9dae353e",
+                "reference": "73f2b0ee9d41fa145f262d372a06cb9a9dae353e",
                 "shasum": ""
             },
             "require-dev": {
@@ -40,7 +40,7 @@
                 "moonsighting.com",
                 "prayer times"
             ],
-            "time": "2020-07-22T05:08:06+00:00"
+            "time": "2020-07-22T06:16:24+00:00"
         }
     ],
     "packages-dev": [
