@@ -10,5 +10,8 @@
   },
   "require-dev": {
       "phpunit/phpunit": "^6.2"
+  },
+  "require": {
+    "islamic-network/prayer-times-moonsighting": "^1.0"
   }
 }

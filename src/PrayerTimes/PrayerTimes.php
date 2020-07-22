@@ -13,6 +13,8 @@ namespace IslamicNetwork\PrayerTimes;
 
 use DateTime;
 use DateTimezone;
+use IslamicNetwork\MoonSighting\Fajr;
+use IslamicNetwork\MoonSighting\Isha;
 use IslamicNetwork\PrayerTimes\DMath;
 use IslamicNetwork\PrayerTimes\Method;
 
@@ -137,6 +139,11 @@ class PrayerTimes
     /**
      * @String
      */
+    private $shafaq; // Only valid for METHOD_MOONSIGHTING
+
+    /**
+     * @String
+     */
     private $offset = [];
 
 
@@ -157,8 +164,12 @@ class PrayerTimes
         $this->loadSettings();
     }
 
+
+    public function setShafaq($shafaq = Isha::SHAFAQ_GENERAL)
+    {
+        $this->shafaq = $shafaq;
+    }
     /**
-     * [setCustomMethod description]
      * @param Method $method [description]
      */
     public function setCustomMethod(Method $method)
@@ -169,11 +180,7 @@ class PrayerTimes
         $this->loadSettings();
     }
 
-    /**
-     * [loadSettings description]
-     * @return [type] [description]
-     */
-    private function loadSettings()
+    private function loadSettings(): void
     {
         $this->settings = new \stdClass();
         $this->settings->{self::IMSAK} = isset($this->methods[$this->method]['params'][self::IMSAK]) ? $this->methods[$this->method]['params'][self::IMSAK] : '10 min';
@@ -188,11 +195,6 @@ class PrayerTimes
         } else {
             $this->setMidnightMode(self::MIDNIGHT_MODE_STANDARD);
         }
-
-        /* Also load any tuning / adjustments.
-        if (isset($this->methods[$this->method]['offset']) && is_array($this->methods[$this->method]['offset'])) {
-            $this->offset = $this->methods[$this->method]['offset'];
-        }*/
     }
 
     /**
@@ -262,10 +264,33 @@ class PrayerTimes
         // add midnight time
         $times[self::MIDNIGHT] = ($this->midnightMode == self::MIDNIGHT_MODE_JAFARI) ? $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) / 2 : $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]) / 2;
 
+        // If our method is Moonsighting, reset the Fajr and Isha times
+        if ($this->method == Method::METHOD_MOONSIGHTING) {
+            $times =$this->moonsightingRecalculation($times);
+        }
 
         $times = $this->tuneTimes($times);
 
         return $this->modifyFormats($times);
+    }
+
+    public function moonsightingRecalculation(array $times): array
+    {
+        // Reset Fajr
+        $fajrMS = new Fajr($this->date, $this->latitude);
+        $times[self::FAJR] = $times[self::SUNRISE] - ($fajrMS->getMinutesBeforeSunrise() / 60);
+
+        // Fajr has changed, also reset Imask
+        if ($this->isMin($this->settings->{self::IMSAK})) {
+            $times[self::IMSAK] = $times[self::FAJR] - $this->evaluate($this->settings->{self::IMSAK})/ 60;
+        }
+
+        // Reset Isha
+        $ishaMS = new Isha($this->date, $this->latitude, $this->shafaq);
+        $times[self::ISHA] = $times[self::SUNSET] + ($ishaMS->getMinutesAfterSunset()/60);
+
+        return $times;
+
     }
 
     /**
@@ -362,6 +387,7 @@ class PrayerTimes
         foreach ($times as $i => $t) {
             $times[$i] += ($dateTimeZone->getOffset($this->date)/3600) - $this->longitude / 15;
         }
+
         if ($this->latitudeAdjustmentMethod != self::LATITUDE_ADJUSTMENT_METHOD_NONE) {
             $times = $this->adjustHighLatitudes($times);
         }
@@ -464,8 +490,8 @@ class PrayerTimes
     {
         $times = $this->dayPortion($times);
         $imsak   = $this->sunAngleTime($this->evaluate($this->settings->{self::IMSAK}), $times[self::IMSAK], 'ccw');
-        $fajr    = $this->sunAngleTime($this->evaluate($this->settings->{self::FAJR}), $times[self::FAJR], 'ccw');
         $sunrise = $this->sunAngleTime($this->riseSetAngle(), $times[self::SUNRISE], 'ccw');
+        $fajr    = $this->sunAngleTime($this->evaluate($this->settings->{self::FAJR}), $times[self::FAJR], 'ccw');
         $dhuhr   = $this->midDay($times[self::ZHUHR]);
         $asr     = $this->asrTime($this->asrFactor(), $times[self::ASR]);
         $sunset  = $this->sunAngleTime($this->riseSetAngle(), $times[self::SUNSET]);
@@ -501,23 +527,6 @@ class PrayerTimes
     }
 
     /**
-     * @param $angle
-     * @param $time
-     * @param null $direction
-     * @return mixed
-     */
-    // compute the time at which sun reaches a specific angle below horizon
-    /*private function sunAngleTime($angle, $time, $direction = null)
-    {
-        $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude/ (15* 24);
-        $decl = $this->sunPosition($julianDate + $time)->declination;
-        $noon = $this->midDay($time);
-        $t = 1/15 * DMath::arccos((-DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude)) / (DMath::cos($decl) * DMath::cos($this->latitude)));
-
-        return $noon + ($direction == 'ccw' ? -$t : $t);
-    }*/
-
-    /**
      * @return int|null
      */
     private function sunAngleTime($angle, $time, $direction = null)
@@ -525,7 +534,6 @@ class PrayerTimes
         $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude/ (15* 24);
         $decl = $this->sunPosition($julianDate + $time)->declination;
         $noon = $this->midDay($time);
-        //$t = 1/15 * DMath::arccos((-DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude)) / (DMath::cos($decl) * DMath::cos($this->latitude)));
         $p1 = -DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude);
         $p2 = DMath::cos($decl) * DMath::cos($this->latitude);
         $cosRange = ($p1/$p2);
@@ -539,6 +547,7 @@ class PrayerTimes
 
         return $noon + ($direction == 'ccw' ? -$t : $t);
     }
+
     private function asrFactor()
     {
         if ($this->asrShadowFactor !== null) {

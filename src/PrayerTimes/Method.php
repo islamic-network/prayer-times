@@ -2,20 +2,20 @@
 
 namespace IslamicNetwork\PrayerTimes;
 
-use IslamicNetwork\PrayerTimes\PrayerTimes;
+use IslamicNetwork\MoonSighting\Isha;
 
 class Method
 {
     /**
      * All methods available for computation
      */
-    const METHOD_MWL = 'MWL'; // 3
-    const METHOD_ISNA = 'ISNA'; // 2;
-    const METHOD_EGYPT = 'EGYPT'; // 5;
-    const METHOD_MAKKAH = 'MAKKAH'; // 4;
-    const METHOD_KARACHI = 'KARACHI'; // 1;
-    const METHOD_TEHRAN = 'TEHRAN'; // 7;
     const METHOD_JAFARI = 'JAFARI'; // 0;
+    const METHOD_KARACHI = 'KARACHI'; // 1;
+    const METHOD_ISNA = 'ISNA'; // 2;
+    const METHOD_MWL = 'MWL'; // 3
+    const METHOD_MAKKAH = 'MAKKAH'; // 4;
+    const METHOD_EGYPT = 'EGYPT'; // 5;
+    const METHOD_TEHRAN = 'TEHRAN'; // 7;
     const METHOD_GULF = 'GULF'; // 8
     const METHOD_KUWAIT = 'KUWAIT'; // 9
     const METHOD_QATAR = 'QATAR'; // 10
@@ -23,8 +23,8 @@ class Method
     const METHOD_FRANCE = 'FRANCE'; // 12
     const METHOD_TURKEY = 'TURKEY'; // 13
     const METHOD_RUSSIA = 'RUSSIA'; // 14
+    const METHOD_MOONSIGHTING = 'MOONSIGHTING'; // 15
     const METHOD_CUSTOM = 'CUSTOM'; // 99
-
 
     /**
      * Name of custom method
@@ -57,7 +57,7 @@ class Method
      * Set the Fajr Angle
      * @param decimal $angle 18 or 18.5 for degrees
      */
-    public function setFajrAngle($angle)
+    public function setFajrAngle($angle): void
     {
         $this->params[PrayerTimes::FAJR] = $angle;
     }
@@ -66,7 +66,7 @@ class Method
      * Set Maghrib angle or minutes after sunset. Example 18 or 18.5 or '20 min'
      * @param string $angleOrMinsAfterSunset
      */
-    public function setMaghribAngleOrMins($angleOrMinsAfterSunset)
+    public function setMaghribAngleOrMins($angleOrMinsAfterSunset): void
     {
         $this->params[PrayerTimes::MAGHRIB] = $angleOrMinsAfterSunset;
     }
@@ -75,12 +75,12 @@ class Method
      * Set Isha angle or mins after Maghrib. Example 18 or 18.5 or '90 min'
      * @param string $angleOrMinsAfterMaghrib
      */
-    public function setIshaAngleOrMins($angleOrMinsAfterMaghrib)
+    public function setIshaAngleOrMins($angleOrMinsAfterMaghrib): void
     {
         $this->params[PrayerTimes::ISHA] = $angleOrMinsAfterMaghrib;
     }
 
-    public static function getMethodCodes()
+    public static function getMethodCodes(): array
     {
         return [
             self::METHOD_MWL,
@@ -97,11 +97,12 @@ class Method
             self::METHOD_FRANCE,
             self::METHOD_TURKEY,
             self::METHOD_RUSSIA,
+            self::METHOD_MOONSIGHTING,
             self::METHOD_CUSTOM,
         ];
     }
 
-    public static function getMethods()
+    public static function getMethods(): array
     {
         return [
              self::METHOD_MWL => [
@@ -218,6 +219,21 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 16,
                     PrayerTimes::ISHA => 15
+                ]
+            ],
+            self::METHOD_RUSSIA => [
+                'id' => 14,
+                'name' => 'Spiritual Administration of Muslims of Russia',
+                'params' => [
+                    PrayerTimes::FAJR => 16,
+                    PrayerTimes::ISHA => 15
+                ]
+            ],
+            self::METHOD_MOONSIGHTING => [
+                'id' => 15,
+                'name' => 'Moonsighting Committee Worldwide (Moonsighting.com)',
+                'params' => [
+                    'shafaq' => Isha::SHAFAQ_GENERAL
                 ]
             ],
             self::METHOD_CUSTOM => [
