@@ -779,7 +779,6 @@ class PrayerTimes
             'timezone' => ($this->date->getTimezone())->getName(),
             'method' => $this->methods[$this->method],
             'latitudeAdjustmentMethod' => $this->latitudeAdjustmentMethod,
-            'shafaq' => $this->shafaq,
             'midnightMode' => $this->midnightMode,
             'school' => $this->school,
             'offset' => $this->offset,
@@ -789,8 +788,7 @@ class PrayerTimes
         }
         if ($this->method == Method::METHOD_MOONSIGHTING) {
             $result['latitudeAdjustmentMethod'] = self::LATITUDE_ADJUSTMENT_METHOD_NONE;
-        } else {
-            unset($result['shafaq']);
+            $result['method']['params']['shafaq'] = $this->shafaq;
         }
 
         return $result;
