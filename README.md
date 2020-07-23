@@ -1,4 +1,6 @@
 [![CircleCI](https://circleci.com/gh/islamic-network/prayer-times.svg?style=shield)](https://circleci.com/gh/islamic-network/prayer-times)
+[![Releases](https://img.shields.io/github/v/release/islamic-network/prayer-times)](https://github.com/islamic-network/prayer-times/releases)
+![](https://img.shields.io/packagist/dt/islamic-network/prayer-times.svg)
 
 ## Prayer Times Library (PHP)
 
