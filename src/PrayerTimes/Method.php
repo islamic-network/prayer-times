@@ -55,7 +55,7 @@ class Method
 
     /**
      * Set the Fajr Angle
-     * @param decimal $angle 18 or 18.5 for degrees
+     * @param float $angle 18 or 18.5 for degrees
      */
     public function setFajrAngle($angle): void
     {
@@ -111,6 +111,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 18,
                     PrayerTimes::ISHA => 17
+                ],
+                'location' => [ // Goodge Street, London, UK
+                    'latitude' => 51.5194682,
+                    'longitude' => -0.1360365,
                 ]
             ],
             self::METHOD_ISNA => [
@@ -119,6 +123,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 15,
                     PrayerTimes::ISHA => 15
+                ],
+                'location' => [ // Plainfield, Indiana, USA
+                    'latitude' => 39.70421229999999,
+                    'longitude' => -86.39943869999999,
                 ]
             ],
             self::METHOD_EGYPT => [
@@ -127,14 +135,22 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 19.5,
                     PrayerTimes::ISHA => 17.5
+                ],
+                'location' => [ // Cairo, Egype
+                    'latitude' => 30.0444196,
+                    'longitude' => 31.2357116,
                 ]
             ],
             self::METHOD_MAKKAH => [
                 'id' => 4,
                 'name' => 'Umm Al-Qura University, Makkah',
                 'params' => [
-                    PrayerTimes::FAJR => 18.5, // fajr was 19 degrees before 1430 hijri
+                    PrayerTimes::FAJR => 18.5, // Fajr was 19 degrees before 1430 hijri
                     PrayerTimes::ISHA => '90 min'
+                ],
+                'location' => [ // Makkah, Saudi Arabia
+                    'latitude' => 21.3890824,
+                    'longitude' => 39.8579118
                 ]
             ],
             self::METHOD_KARACHI => [
@@ -143,6 +159,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 18,
                     PrayerTimes::ISHA => 18
+                ],
+                'location' => [ // Karachi, Pakistan
+                    'latitude' => 24.8614622,
+                    'longitude' => 67.0099388
                 ]
             ],
             self::METHOD_TEHRAN => [
@@ -153,6 +173,10 @@ class Method
                     PrayerTimes::ISHA => 14,
                     PrayerTimes::MAGHRIB => 4.5,
                     PrayerTimes::MIDNIGHT => self::METHOD_JAFARI
+                ],
+                'location' => [ // Tehran, Iran
+                    'latitude' => 35.6891975,
+                    'longitude' => 51.3889736
                 ]
             ],
             self::METHOD_JAFARI => [
@@ -163,6 +187,10 @@ class Method
                     PrayerTimes::ISHA => 14,
                     PrayerTimes::MAGHRIB => 4,
                     PrayerTimes::MIDNIGHT => self::METHOD_JAFARI
+                ],
+                'location' => [ // Qum, Iran
+                    'latitude' => 34.6415764,
+                    'longitude' => 50.8746035
                 ]
             ],
             self::METHOD_GULF => [
@@ -171,6 +199,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 19.5,
                     PrayerTimes::ISHA => '90 min'
+                ],
+                'location' => [ // Qum, Iran
+                    'latitude' => 25.2048493,
+                    'longitude' => 55.2707828
                 ]
             ],
             self::METHOD_KUWAIT => [
@@ -179,6 +211,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 18,
                     PrayerTimes::ISHA => 17.5
+                ],
+                'location' => [ // Kuwait City, Kuwait
+                    'latitude' => 29.375859,
+                    'longitude' => 47.9774052
                 ]
             ],
             self::METHOD_QATAR => [
@@ -187,6 +223,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 18,
                     PrayerTimes::ISHA => '90 min'
+                ],
+                'location' => [ // Doha, Qatar
+                    'latitude' => 25.2854473,
+                    'longitude' => 51.5310398
                 ]
             ],
             self::METHOD_SINGAPORE => [
@@ -197,12 +237,28 @@ class Method
                     PrayerTimes::ISHA => 18
                 ]
             ],
+                self::METHOD_QATAR => [
+                    'id' => 10,
+                    'name' => 'Qatar',
+                    'params' => [
+                        PrayerTimes::FAJR => 18,
+                        PrayerTimes::ISHA => '90 min'
+                    ],
+                    'location' => [
+                        'latitude' => 1.352083,
+                        'longitude' => 103.819836
+                    ]
+            ],
             self::METHOD_FRANCE => [
                 'id' => 12,
                 'name' => 'Union Organization Islamic de France',
                 'params' => [
                     PrayerTimes::FAJR => 12,
                     PrayerTimes::ISHA => 12
+                ],
+                'location' => [
+                    'latitude' => 48.856614,
+                    'longitude' => 2.3522219
                 ]
             ],
             self::METHOD_TURKEY => [
@@ -211,6 +267,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 18,
                     PrayerTimes::ISHA => 17
+                ],
+                'location' => [ // Ankara, Turkey
+                    'latitude' => 39.9333635,
+                    'longitude' => 32.8597419
                 ]
             ],
             self::METHOD_RUSSIA => [
@@ -219,15 +279,12 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 16,
                     PrayerTimes::ISHA => 15
+                ],
+                'location' => [ // Ufa city, Republic Bashkortostan, Russia
+                    'latitude' => 54.73479099999999,
+                    'longitude' => 55.9578555
                 ]
-            ],
-            self::METHOD_RUSSIA => [
-                'id' => 14,
-                'name' => 'Spiritual Administration of Muslims of Russia',
-                'params' => [
-                    PrayerTimes::FAJR => 16,
-                    PrayerTimes::ISHA => 15
-                ]
+
             ],
             self::METHOD_MOONSIGHTING => [
                 'id' => 15,
