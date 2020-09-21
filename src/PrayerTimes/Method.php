@@ -235,6 +235,10 @@ class Method
                 'params' => [
                     PrayerTimes::FAJR => 20,
                     PrayerTimes::ISHA => 18
+                ],
+                'location' => [
+                    'latitude' => 1.352083,
+                    'longitude' => 103.819836
                 ]
             ],
                 self::METHOD_QATAR => [
@@ -245,8 +249,8 @@ class Method
                         PrayerTimes::ISHA => '90 min'
                     ],
                     'location' => [
-                        'latitude' => 1.352083,
-                        'longitude' => 103.819836
+                        'latitude' => 25.2854473,
+                        'longitude' => 51.5310398
                     ]
             ],
             self::METHOD_FRANCE => [
