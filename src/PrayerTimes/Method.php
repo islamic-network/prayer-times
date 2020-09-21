@@ -200,7 +200,7 @@ class Method
                     PrayerTimes::FAJR => 19.5,
                     PrayerTimes::ISHA => '90 min'
                 ],
-                'location' => [ // Qum, Iran
+                'location' => [ // Dubai, UAE
                     'latitude' => 25.2048493,
                     'longitude' => 55.2707828
                 ]
@@ -240,18 +240,6 @@ class Method
                     'latitude' => 1.352083,
                     'longitude' => 103.819836
                 ]
-            ],
-                self::METHOD_QATAR => [
-                    'id' => 10,
-                    'name' => 'Qatar',
-                    'params' => [
-                        PrayerTimes::FAJR => 18,
-                        PrayerTimes::ISHA => '90 min'
-                    ],
-                    'location' => [
-                        'latitude' => 25.2854473,
-                        'longitude' => 51.5310398
-                    ]
             ],
             self::METHOD_FRANCE => [
                 'id' => 12,
