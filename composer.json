@@ -1,7 +1,7 @@
 {
   "name": "islamic-network/prayer-times",
   "type": "library",
-  "description": "Precision and Powerful PHP Prayer Times Library",
+  "description": "Precise and Powerful PHP Prayer Times Library",
   "license": "GPL-3.0-or-later",
   "autoload": {
     "psr-4": {
