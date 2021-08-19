@@ -298,7 +298,7 @@ class PrayerTimes
     private function modifyFormats($times)
     {
         foreach ($times as $i => $t) {
-            $times[$i] = $this->getFormattedTime($t, $this->timeFormat);
+            $times[$i] = $this->getFormattedTime($t, $this->timeFormat, $i);
         }
 
         return $times;
@@ -309,7 +309,7 @@ class PrayerTimes
      * @param $format
      * @return string
      */
-    private function getFormattedTime($time, $format)
+    private function getFormattedTime($time, $format, $prayer)
     {
         if (is_nan($time)) {
             return self::INVALID_TIME;
@@ -331,6 +331,11 @@ class PrayerTimes
             // Create temporary date object
             $date = clone $this->date;
             $date->setTime($hours, $twoDigitMinutes);
+            if ($prayer == 'Midnight') {
+                if ($hours >= 1 && $hours < 12) {
+                    $date->modify('+1 day');
+                }
+            }
             return $date->format(DateTime::ATOM);
         }
 
