@@ -34,6 +34,8 @@ class PrayerTimes
     const MAGHRIB = 'Maghrib';
     const ISHA = 'Isha';
     const MIDNIGHT = 'Midnight';
+    const FIRST_THIRD = 'First third';
+    const SECOND_THIRD = 'Second third';
 
     /**
      * Schools that determine the Asr shadow for the purpose of this class
@@ -259,8 +261,11 @@ class PrayerTimes
 
         $times = $this->adjustTimes($times);
 
-        // add midnight time
-        $times[self::MIDNIGHT] = ($this->midnightMode == self::MIDNIGHT_MODE_JAFARI) ? $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) / 2 : $times[self::SUNSET] + $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]) / 2;
+        // add night times
+        $diff = ($this->midnightMode == self::MIDNIGHT_MODE_JAFARI) ? $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) : $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]);
+        $times[self::FIRST_THIRD] = $times[self::SUNSET] + $diff / 3;
+        $times[self::MIDNIGHT] = $times[self::SUNSET] + $diff / 2;
+        $times[self::SECOND_THIRD] = $times[self::SUNSET] + 2 * ($diff / 3);
 
         // If our method is Moonsighting, reset the Fajr and Isha times
         if ($this->method == Method::METHOD_MOONSIGHTING) {
