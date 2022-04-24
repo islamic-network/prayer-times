@@ -4,7 +4,7 @@
 
 ## Prayer Times Library (PHP)
 
-This is a PHP edition of the Prayer Times Library (v2.3) originally written in JavaScript by Hamid Zarrabi-Zadeh of PrayTimes.org and available on http://praytimes.org/code/v2/js/PrayTimes.js. It has divulged much from the original since it was first written, so please don't use it as a 'like for like' substitute - the method names, among others things, are different..
+This is a PHP edition of the Prayer Times Library (v2.3) originally written in JavaScript by Hamid Zarrabi-Zadeh of PrayTimes.org and available on http://praytimes.org/code/v2/js/PrayTimes.js. It has divulged much from the original since it was first written, so please don't use it as a 'like for like' substitute - the method names, among other things, are different..
 
 ## How to Use this Library
 
