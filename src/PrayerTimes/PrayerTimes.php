@@ -208,7 +208,7 @@ class PrayerTimes
      */
     public function getTimesForToday($latitude, $longitude, $timezone, $elevation = null, $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE, $midnightMode = null, $format = self::TIME_FORMAT_24H)
     {
-        $date = new DateTime(null, new DateTimezone($timezone));
+        $date = new DateTime('', new DateTimezone($timezone));
 
         return $this->getTimes($date, $latitude, $longitude, $elevation, $latitudeAdjustmentMethod, $midnightMode, $format);
     }
