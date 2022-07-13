@@ -34,8 +34,8 @@ class PrayerTimes
     const MAGHRIB = 'Maghrib';
     const ISHA = 'Isha';
     const MIDNIGHT = 'Midnight';
-    const FIRST_THIRD = 'First third';
-    const SECOND_THIRD = 'Second third';
+    const FIRST_THIRD = 'Firstthird';
+    const SECOND_THIRD = 'Secondthird';
 
     /**
      * Schools that determine the Asr shadow for the purpose of this class
