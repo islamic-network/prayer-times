@@ -263,8 +263,8 @@ class PrayerTimes
 
         // add night times
         $diff = ($this->midnightMode == self::MIDNIGHT_MODE_JAFARI) ? $this->timeDiff($times[self::SUNSET], $times[self::FAJR]) : $this->timeDiff($times[self::SUNSET], $times[self::SUNRISE]);
-        $times[self::FIRST_THIRD] = $times[self::SUNSET] + $diff / 3;
         $times[self::MIDNIGHT] = $times[self::SUNSET] + $diff / 2;
+        $times[self::FIRST_THIRD] = $times[self::SUNSET] + $diff / 3;
         $times[self::SECOND_THIRD] = $times[self::SUNSET] + 2 * ($diff / 3);
 
         // If our method is Moonsighting, reset the Fajr and Isha times
