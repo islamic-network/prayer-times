@@ -11,6 +11,7 @@
 
 namespace IslamicNetwork\PrayerTimes;
 
+use AlAdhanApi\Helper\PrayerTimesHelper;
 use DateTime;
 use DateTimezone;
 use IslamicNetwork\MoonSighting\Fajr;
@@ -519,17 +520,40 @@ class PrayerTimes
     }
 
     /**
+     * An Addendum to the PHP method to return a float with the fraction of the day instead of an int.
+     * See https://www.php.net/manual/en/function.gregoriantojd.php.
+     * @param int $month
+     * @param int $day
+     * @param int $year
+     * @return float
+     */
+    private function gregorianToJulianDate(): float
+    {
+        $julianDate = gregoriantojd($this->date->format('n'), $this->date->format('d'), $this->date->format('y'));
+
+        //correct for half-day offset
+        $dayfrac = date('G') / 24 - .5;
+        if ($dayfrac < 0) $dayfrac += 1;
+
+        //now set the fraction of a day
+        $frac = $dayfrac + (date('i') + date('s') / 60) / 60 / 24;
+
+        return ($julianDate + $frac);
+
+    }
+    /**
      * @param $factor
      * @param $time
      * @return mixed
      */
     private function asrTime($factor, $time)
     {
-        $julianDate = GregorianToJD($this->date->format('n'), $this->date->format('d'), $this->date->format('Y'));
+        $julianDate = $this->gregorianToJulianDate();
 
-        $decl = $this->sunPosition($julianDate + $time)->declination;
+        $decl = ($this->sunPosition($julianDate + $time))->declination;
 
         $angle = -DMath::arccot($factor+ DMath::tan(abs($this->latitude- $decl)));
+
 
         return $this->sunAngleTime($angle, $time);
     }
@@ -539,7 +563,7 @@ class PrayerTimes
      */
     private function sunAngleTime($angle, $time, $direction = null)
     {
-        $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude/ (15* 24);
+        $julianDate = $this->julianDate($this->date->format('Y'), $this->date->format('n'), $this->date->format('d')) - $this->longitude / (15* 24);
         $decl = $this->sunPosition($julianDate + $time)->declination;
         $noon = $this->midDay($time);
         $p1 = -DMath::sin($angle) - DMath::sin($decl) * DMath::sin($this->latitude);
