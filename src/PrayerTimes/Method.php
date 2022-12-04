@@ -24,6 +24,7 @@ class Method
     const METHOD_TURKEY = 'TURKEY'; // 13
     const METHOD_RUSSIA = 'RUSSIA'; // 14
     const METHOD_MOONSIGHTING = 'MOONSIGHTING'; // 15
+    const METHOD_UAE = 'UAE';
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
@@ -98,6 +99,7 @@ class Method
             self::METHOD_TURKEY,
             self::METHOD_RUSSIA,
             self::METHOD_MOONSIGHTING,
+            self::METHOD_UAE,
             self::METHOD_CUSTOM,
         ];
     }
@@ -283,6 +285,18 @@ class Method
                 'name' => 'Moonsighting Committee Worldwide (Moonsighting.com)',
                 'params' => [
                     'shafaq' => Isha::SHAFAQ_GENERAL
+                ]
+            ],
+            self::METHOD_UAE => [
+                'id' => 16,
+                'name' => 'UAE Awqaf (experimental)',
+                'params' => [
+                    PrayerTimes::FAJR => 18.2,
+                    PrayerTimes::ISHA => 18.2,
+                ],
+                'location' => [ // Dubai, UAE
+                    'latitude' => 25.0762677,
+                    'longitude' => 55.087404
                 ]
             ],
             self::METHOD_CUSTOM => [
