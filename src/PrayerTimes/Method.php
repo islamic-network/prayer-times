@@ -99,7 +99,7 @@ class Method
             self::METHOD_TURKEY,
             self::METHOD_RUSSIA,
             self::METHOD_MOONSIGHTING,
-            self::METHOD_UAE,
+            self::METHOD_DUBAI,
             self::METHOD_CUSTOM,
         ];
     }
