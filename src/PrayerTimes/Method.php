@@ -24,7 +24,7 @@ class Method
     const METHOD_TURKEY = 'TURKEY'; // 13
     const METHOD_RUSSIA = 'RUSSIA'; // 14
     const METHOD_MOONSIGHTING = 'MOONSIGHTING'; // 15
-    const METHOD_UAE = 'UAE';
+    const METHOD_DUBAI = 'DUBAI';
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
@@ -287,9 +287,9 @@ class Method
                     'shafaq' => Isha::SHAFAQ_GENERAL
                 ]
             ],
-            self::METHOD_UAE => [
+            self::METHOD_DUBAI => [
                 'id' => 16,
-                'name' => 'UAE Awqaf (experimental)',
+                'name' => 'Dubai (experimental)',
                 'params' => [
                     PrayerTimes::FAJR => 18.2,
                     PrayerTimes::ISHA => 18.2,
