@@ -202,7 +202,7 @@ class Method
                     PrayerTimes::FAJR => 19.5,
                     PrayerTimes::ISHA => '90 min'
                 ],
-                'location' => [ // Dubai, UAE
+                'location' => [ // Khasbat Al Reed Island, Abu Dhabi, UAE
                     'latitude' => 24.1323638,
                     'longitude' => 53.3199527
                 ]
