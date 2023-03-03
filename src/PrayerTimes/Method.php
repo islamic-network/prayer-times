@@ -203,8 +203,8 @@ class Method
                     PrayerTimes::ISHA => '90 min'
                 ],
                 'location' => [ // Dubai, UAE
-                    'latitude' => 25.2048493,
-                    'longitude' => 55.2707828
+                    'latitude' => 24.1323638,
+                    'longitude' => 53.3199527
                 ]
             ],
             self::METHOD_KUWAIT => [
