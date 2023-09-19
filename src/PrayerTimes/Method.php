@@ -257,7 +257,7 @@ class Method
             ],
             self::METHOD_TURKEY => [
                 'id' => 13,
-                'name' => 'Diyanet İşleri Başkanlığı, Turkey',
+                'name' => 'Diyanet İşleri Başkanlığı, Turkey (experimental)',
                 'params' => [
                     PrayerTimes::FAJR => 18,
                     PrayerTimes::ISHA => 17
