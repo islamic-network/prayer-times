@@ -220,7 +220,7 @@ class PrayerTimes
      * @param DateTime $date
      * @param $latitude
      * @param $longitude
-     * @param null $elevation
+     * @param $elevation
      * @param string $latitudeAdjustmentMethod
      * @param string $midnightMode
      * @param string $format
