@@ -24,7 +24,16 @@ class Method
     const METHOD_TURKEY = 'TURKEY'; // 13
     const METHOD_RUSSIA = 'RUSSIA'; // 14
     const METHOD_MOONSIGHTING = 'MOONSIGHTING'; // 15
-    const METHOD_DUBAI = 'DUBAI';
+    const METHOD_DUBAI = 'DUBAI'; // 16
+    const METHOD_JAKIM  = 'JAKIM'; // 17
+    const METHOD_TUNISIA = 'TUNISIA';
+
+    const METHOD_ALGERIA = 'ALGERIA'; // 19
+    const METHOD_KEMENAG = 'KEMENAG'; // 20
+
+    const METHOD_MOROCCO = 'MOROCCO'; // 21
+
+
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
@@ -297,6 +306,66 @@ class Method
                 'location' => [ // Dubai, UAE
                     'latitude' => 25.0762677,
                     'longitude' => 55.087404
+                ]
+            ],
+            self::METHOD_JAKIM => [
+                'id' => 17,
+                'name' => 'Jabatan Kemajuan Islam Malaysia (JAKIM)',
+                'params' => [
+                    PrayerTimes::FAJR => 20,
+                    PrayerTimes::ISHA => 18,
+                ],
+                'location' => [ // Kuala Lumpur, Malaysia
+                    'latitude' => 3.139003,
+                    'longitude' => 101.686855
+                ]
+            ],
+            self::METHOD_TUNISIA => [
+                'id' => 18,
+                'name' => 'Tunisia',
+                'params' => [
+                    PrayerTimes::FAJR => 18,
+                    PrayerTimes::ISHA => 18,
+                ],
+                'location' => [ // Tunis, Tunisia
+                    'latitude' => 36.8064948,
+                    'longitude' => 10.1815316
+                ]
+            ],
+            self::METHOD_ALGERIA => [
+                'id' => 19,
+                'name' => 'Algeria',
+                'params' => [
+                    PrayerTimes::FAJR => 18,
+                    PrayerTimes::ISHA => 17,
+                ],
+                'location' => [ // Algiers, Algeria
+                    'latitude' => 36.753768,
+                    'longitude' => 3.0587561
+                ]
+            ],
+            self::METHOD_KEMENAG => [
+                'id' => 20,
+                'name' => 'Kementerian Agama Republik Indonesia',
+                'params' => [
+                    PrayerTimes::FAJR => 20,
+                    PrayerTimes::ISHA => 18,
+                ],
+                'location' => [ // Jakarta, Indonesia
+                    'latitude' => -6.2087634,
+                    'longitude' => 106.845599
+                ]
+            ],
+            self::METHOD_MOROCCO => [
+                'id' => 21,
+                'name' => 'Morocco',
+                'params' => [
+                    PrayerTimes::FAJR => 19,
+                    PrayerTimes::ISHA => 17,
+                ],
+                'location' => [ // Rabat, Morocco
+                    'latitude' => 33.9715904,
+                    'longitude' => -6.8498129
                 ]
             ],
             self::METHOD_CUSTOM => [
