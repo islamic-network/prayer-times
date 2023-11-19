@@ -26,7 +26,7 @@ class Method
     const METHOD_MOONSIGHTING = 'MOONSIGHTING'; // 15
     const METHOD_DUBAI = 'DUBAI'; // 16
     const METHOD_JAKIM  = 'JAKIM'; // 17
-    const METHOD_TUNISIA = 'TUNISIA';
+    const METHOD_TUNISIA = 'TUNISIA'; // 18
     const METHOD_ALGERIA = 'ALGERIA'; // 19
     const METHOD_KEMENAG = 'KEMENAG'; // 20
     const METHOD_MOROCCO = 'MOROCCO'; // 21
@@ -105,6 +105,11 @@ class Method
             self::METHOD_RUSSIA,
             self::METHOD_MOONSIGHTING,
             self::METHOD_DUBAI,
+            self::METHOD_JAKIM,
+            self::METHOD_TUNISIA,
+            self::METHOD_ALGERIA,
+            self::METHOD_KEMENAG,
+            self::METHOD_MOROCCO,
             self::METHOD_CUSTOM,
         ];
     }
