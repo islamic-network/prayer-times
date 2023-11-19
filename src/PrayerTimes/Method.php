@@ -27,13 +27,9 @@ class Method
     const METHOD_DUBAI = 'DUBAI'; // 16
     const METHOD_JAKIM  = 'JAKIM'; // 17
     const METHOD_TUNISIA = 'TUNISIA';
-
     const METHOD_ALGERIA = 'ALGERIA'; // 19
     const METHOD_KEMENAG = 'KEMENAG'; // 20
-
     const METHOD_MOROCCO = 'MOROCCO'; // 21
-
-
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
