@@ -30,6 +30,7 @@ class Method
     const METHOD_ALGERIA = 'ALGERIA'; // 19
     const METHOD_KEMENAG = 'KEMENAG'; // 20
     const METHOD_MOROCCO = 'MOROCCO'; // 21
+    const METHOD_PORTUGAL = 'PORTUGAL'; // 22
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
@@ -110,6 +111,7 @@ class Method
             self::METHOD_ALGERIA,
             self::METHOD_KEMENAG,
             self::METHOD_MOROCCO,
+            self::METHOD_PORTUGAL,
             self::METHOD_CUSTOM,
         ];
     }
@@ -367,6 +369,19 @@ class Method
                 'location' => [ // Rabat, Morocco
                     'latitude' => 33.9715904,
                     'longitude' => -6.8498129
+                ]
+            ],
+            self::METHOD_PORTUGAL => [
+                'id' => 22,
+                'name' => 'Comunidade Islamica de Lisboa',
+                'params' => [
+                    PrayerTimes::FAJR => 18,
+                    PrayerTimes::MAGHRIB => '3 min',
+                    PrayerTimes::ISHA => '77 min',
+                ],
+                'location' => [ // Lisbon, Portugal
+                    'latitude' => 38.7222524,
+                    'longitude' => -9.1393366
                 ]
             ],
             self::METHOD_CUSTOM => [
