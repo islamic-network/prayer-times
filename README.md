@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/islamic-network/prayer-times.svg?style=shield)](https://circleci.com/gh/islamic-network/prayer-times)
+[![CI](https://cairo.mamluk.net/api/v1/teams/islamic-network/pipelines/prayer-times/badge)](https://cairo.mamluk.net/teams/islamic-network/pipelines/prayer-times)
 [![Releases](https://img.shields.io/github/v/release/islamic-network/prayer-times)](https://github.com/islamic-network/prayer-times/releases)
 ![](https://img.shields.io/packagist/dt/islamic-network/prayer-times.svg)
 
