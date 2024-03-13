@@ -337,8 +337,8 @@ class PrayerTimes
             // Create temporary date object
             $date = clone $this->date;
             $date->setTime($hours, $twoDigitMinutes);
-            if ($prayer == 'Midnight') {
-                if ($hours >= 1 && $hours < 12) {
+            if (in_array($prayer, ['Midnight', 'Lastthird'])) {
+                if ($hours < 12) { // Hours are in military time, so if this falls on the next day, it will always be less than 12
                     $date->modify('+1 day');
                 }
             }
