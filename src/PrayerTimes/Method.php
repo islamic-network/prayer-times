@@ -31,6 +31,7 @@ class Method
     const METHOD_KEMENAG = 'KEMENAG'; // 20
     const METHOD_MOROCCO = 'MOROCCO'; // 21
     const METHOD_PORTUGAL = 'PORTUGAL'; // 22
+    const METHOD_JORDAN = 'JORDAN'; // 23
     const METHOD_CUSTOM = 'CUSTOM'; // 99
 
     /**
@@ -112,6 +113,7 @@ class Method
             self::METHOD_KEMENAG,
             self::METHOD_MOROCCO,
             self::METHOD_PORTUGAL,
+            self::METHOD_JORDAN,
             self::METHOD_CUSTOM,
         ];
     }
@@ -382,6 +384,19 @@ class Method
                 'location' => [ // Lisbon, Portugal
                     'latitude' => 38.7222524,
                     'longitude' => -9.1393366
+                ]
+            ],
+            self::METHOD_JORDAN => [
+                'id' => 23,
+                'name' => 'Ministry of Awqaf, Islamic Affairs and Holy Places, Jordan',
+                'params' => [
+                    PrayerTimes::FAJR => 18,
+                    PrayerTimes::MAGHRIB => '5 min',
+                    PrayerTimes::ISHA => 18,
+                ],
+                'location' => [ // Amman, Jordan
+                    'latitude' => 31.9461222,
+                    'longitude' => 35.923844
                 ]
             ],
             self::METHOD_CUSTOM => [
