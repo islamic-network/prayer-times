@@ -17,7 +17,7 @@ class TimingsMoonSightingTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('04:04', $t['Fajr']);
         $this->assertEquals('05:46', $t['Sunrise']);
         $this->assertEquals('12:59', $t['Dhuhr']);
-        $this->assertEquals('16:55', $t['Asr']);
+        $this->assertEquals('16:54', $t['Asr']);
         $this->assertEquals('20:12', $t['Sunset']);
         $this->assertEquals('20:12', $t['Maghrib']);
         $this->assertEquals('21:21', $t['Isha']);

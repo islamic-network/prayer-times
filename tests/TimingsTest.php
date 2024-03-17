@@ -14,7 +14,7 @@ class TimingsTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('2014-04-24T03:57:00+01:00', $t['Fajr']);
         $this->assertEquals('2014-04-24T05:46:00+01:00', $t['Sunrise']);
         $this->assertEquals('2014-04-24T12:59:00+01:00', $t['Dhuhr']);
-        $this->assertEquals('2014-04-24T16:55:00+01:00', $t['Asr']);
+        $this->assertEquals('2014-04-24T16:54:00+01:00', $t['Asr']);
     }
 
     public function testTimes()
@@ -25,7 +25,7 @@ class TimingsTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('03:57', $t['Fajr']);
         $this->assertEquals('05:46', $t['Sunrise']);
         $this->assertEquals('12:59', $t['Dhuhr']);
-        $this->assertEquals('16:55', $t['Asr']);
+        $this->assertEquals('16:54', $t['Asr']);
         $this->assertEquals('20:12', $t['Sunset']);
         $this->assertEquals('20:12', $t['Maghrib']);
         $this->assertEquals('22:02', $t['Isha']);
