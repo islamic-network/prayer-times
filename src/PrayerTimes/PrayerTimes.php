@@ -2,7 +2,7 @@
 /**
  * PrayTimes.js: Prayer Times Calculator (ver 2.3)
  * Copyright (C) 2007-2011 PrayTimes.org
- * Copyright (C) 2015-2017 AlAdhan.com
+ * Copyright (C) 2015-2014 Islamic Network
 
  * Developed in JavaScript by Hamid Zarrabi-Zadeh
  * Ported to PHP by Meezaan-ud-Din Abdu Dhil-Jalali Wal-Ikram
@@ -11,7 +11,6 @@
 
 namespace IslamicNetwork\PrayerTimes;
 
-use AlAdhanApi\Helper\PrayerTimesHelper;
 use DateTime;
 use DateTimezone;
 use IslamicNetwork\MoonSighting\Fajr;
