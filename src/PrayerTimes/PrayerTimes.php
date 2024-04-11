@@ -84,32 +84,32 @@ class PrayerTimes
     /**
      * @object DateTime
      */
-    private $date;
+    private DateTime $date;
 
     /**
      * @String
      */
-    private $method;
+    private string $method;
 
     /**
      * @Sstring
      */
-    private $school = self::SCHOOL_STANDARD;
+    private string $school = self::SCHOOL_STANDARD;
 
     /**
      * @String
      */
-    private $midnightMode;
+    private string $midnightMode;
 
     /**
      * @String
      */
-    private $latitudeAdjustmentMethod;
+    private string $latitudeAdjustmentMethod;
 
     /**
      * @String
      */
-    private $timeFormat;
+    private string $timeFormat;
 
     /**
      * @String
@@ -531,11 +531,11 @@ class PrayerTimes
         $julianDate = gregoriantojd($this->date->format('n'), $this->date->format('d'), $this->date->format('Y'));
 
         //correct for half-day offset
-        $dayfrac = date('G') / 24 - .5;
+        $dayfrac = $this->date->format('G') / 24 - .5;
         if ($dayfrac < 0) $dayfrac += 1;
 
         //now set the fraction of a day
-        $frac = $dayfrac + (date('i') + date('s') / 60) / 60 / 24;
+        $frac = $dayfrac + ($this->date->format('i') + $this->date->format('s') / 60) / 60 / 24;
 
         return ($julianDate + $frac);
 
