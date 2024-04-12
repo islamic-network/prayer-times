@@ -17,6 +17,34 @@ class TimingsTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('2014-04-24T16:54:00+01:00', $t['Asr']);
     }
 
+    public function testIso8601FormatNextDay()
+    {
+        $pt = new PrayerTimes('ISNA');
+        $date = new DateTime('2014-4-24', new DateTimezone('Europe/London'));
+        $t = $pt->getTimes($date, '70', '-10', null, PrayerTimes::LATITUDE_ADJUSTMENT_METHOD_ANGLE, null, PrayerTimes::TIME_FORMAT_ISO8601);
+        $this->assertEquals('2014-04-24T03:15:00+01:00', $t['Fajr']);
+        $this->assertEquals('2014-04-24T04:50:00+01:00', $t['Sunrise']);
+        $this->assertEquals('2014-04-24T13:38:00+01:00', $t['Dhuhr']);
+        $this->assertEquals('2014-04-24T17:45:00+01:00', $t['Asr']);
+        $this->assertEquals('2014-04-24T22:29:00+01:00', $t['Maghrib']);
+        $this->assertEquals('2014-04-25T00:04:00+01:00', $t['Isha']);
+        $this->assertEquals('2014-04-25T01:39:00+01:00', $t['Midnight']);
+    }
+
+    public function testIso8601FormatPreviousDay()
+    {
+        $pt = new PrayerTimes('ISNA');
+        $date = new DateTime('2014-4-24', new DateTimezone('Europe/London'));
+        $t = $pt->getTimes($date, '70', '40', null, PrayerTimes::LATITUDE_ADJUSTMENT_METHOD_ANGLE, null, PrayerTimes::TIME_FORMAT_ISO8601);
+        $this->assertEquals('2014-04-23T23:55:00+01:00', $t['Fajr']);
+        $this->assertEquals('2014-04-24T01:30:00+01:00', $t['Sunrise']);
+        $this->assertEquals('2014-04-24T10:18:00+01:00', $t['Dhuhr']);
+        $this->assertEquals('2014-04-24T14:25:00+01:00', $t['Asr']);
+        $this->assertEquals('2014-04-24T19:08:00+01:00', $t['Maghrib']);
+        $this->assertEquals('2014-04-24T20:44:00+01:00', $t['Isha']);
+        $this->assertEquals('2014-04-24T22:19:00+01:00', $t['Midnight']);
+    }
+
     public function testTimes()
     {
         $pt = new PrayerTimes('ISNA');

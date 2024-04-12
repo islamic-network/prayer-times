@@ -11,6 +11,7 @@
 
 namespace IslamicNetwork\PrayerTimes;
 
+use DateInterval;
 use DateTime;
 use DateTimezone;
 use IslamicNetwork\MoonSighting\Fajr;
@@ -324,10 +325,11 @@ class PrayerTimes
         }
         $suffixes = ['am', 'pm'];
 
-        $time = DMath::fixHour($time + 0.5/ 60);  // add 0.5 minutes to round
+        $time = $time + 0.5/ 60;  // add 0.5 minutes for rounding (when we later truncate)
+        $fixTime = DMath::fixHour($time);  // wrap to 00h-23h
 
-        $hours = floor($time);
-        $minutes = floor(($time - $hours)* 60);
+        $hours = floor($fixTime);
+        $minutes = floor(($fixTime - $hours)* 60);
         $suffix = ($this->timeFormat == self::TIME_FORMAT_12H) ? $suffixes[$hours < 12 ? 0 : 1] : '';
         $hour = ($format == self::TIME_FORMAT_24H) ? $this->twoDigitsFormat($hours) : (($hours+ 12 -1)% 12+ 1);
         $twoDigitMinutes = $this->twoDigitsFormat($minutes);
@@ -335,11 +337,11 @@ class PrayerTimes
         if ($format == self::TIME_FORMAT_ISO8601) {
             // Create temporary date object
             $date = clone $this->date;
-            $date->setTime($hours, $twoDigitMinutes);
-            if (in_array($prayer, ['Midnight', 'Lastthird'])) {
-                if ($hours < 12) { // Hours are in military time, so if this falls on the next day, it will always be less than 12
-                    $date->modify('+1 day');
-                }
+            $date->setTime(0, 0);
+            if ($time > 0) {
+                $date->add(new DateInterval('PT' . floor($time * 60) . 'M'));
+            } else {
+                $date->sub(new DateInterval('PT' . ceil(-$time * 60) . 'M'));
             }
             return $date->format(DateTime::ATOM);
         }
