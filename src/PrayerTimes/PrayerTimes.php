@@ -242,6 +242,40 @@ class PrayerTimes
     }
 
     /**
+     * @param string $year
+     * @param string $month
+     * @param $latitude
+     * @param $longitude
+     * @param $elevation
+     * @param string $latitudeAdjustmentMethod
+     * @param string $midnightMode
+     * @param string $format
+     * @return mixed
+     */
+    public function getTimesByMonth($year,
+            $month,
+            $latitude,
+            $longitude,
+            $timezone,
+            $elevation = null,
+            $latitudeAdjustmentMethod = self::LATITUDE_ADJUSTMENT_METHOD_ANGLE,
+            $midnightMode = null,
+            $format = self::TIME_FORMAT_24H)
+    {
+        $date = new DateTime($year . '-' . $month . '-01', new DateTimezone($timezone));
+
+        $times = [];
+        while ($date->format('m') == $month) {
+            $day = $date->format('Y-m-d');
+            $times[$day] = $this->getTimes($date, $latitude, $longitude, $elevation, $latitudeAdjustmentMethod, $midnightMode, $format);
+            $times[$date->format('Y-m-d')]['date'] = $day;
+            $date->add(new DateInterval('P1D'));
+        }
+
+        return $times;
+    }
+
+    /**
      * @return Array
      */
     private function computeTimes()
