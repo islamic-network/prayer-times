@@ -2,6 +2,8 @@
 [![Releases](https://img.shields.io/github/v/release/islamic-network/prayer-times)](https://github.com/islamic-network/prayer-times/releases)
 ![](https://img.shields.io/packagist/dt/islamic-network/prayer-times.svg)
 
+# This repository is no longer active. Please see https://community.islamic.network/d/140-removing-repositories-from-github.
+
 ## Prayer Times Library (PHP)
 
 This is a PHP edition of the Prayer Times Library (v2.3) originally written in JavaScript by Hamid Zarrabi-Zadeh of PrayTimes.org and available on http://praytimes.org/code/v2/js/PrayTimes.js. It has divulged much from the original since it was first written, so please don't use it as a 'like for like' substitute - the method names, among other things, are different.
